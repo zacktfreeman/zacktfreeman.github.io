@@ -1,0 +1,196 @@
+body 
+{
+    margin: 0;
+    margin-top: 0px;
+    font-family: 'Ubuntu'; font-size: 22px;
+}
+
+main
+{
+    margin-top: 5%;
+    margin-left: 8%;
+    width: auto;
+    background-color: inherit;
+    text-align: left;
+    color: #000000;
+    font-size: 24px;
+    font-family: inherit;
+}
+
+html 
+{
+    /* #4f4f96f6 */
+    background-color:#ebebf5f5;
+    
+}
+
+header ul 
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1b2021;
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,.2);
+}
+  
+header li
+{
+    float: left;
+}
+  
+header li a 
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 29px 16px;
+    text-decoration: none;
+}
+  
+/* Change the link color to #111 (black) on hover */
+header li a:hover 
+{
+    background-color: #111;
+}
+
+h2
+{
+    color: #1b2021;
+    text-decoration: underline;
+}
+
+#current a
+{
+    background-color: #4392f1;
+}
+
+/* Style all font awesome icons */
+.fa 
+{
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+}
+  
+/* Add a hover effect if you want */
+.fa:hover 
+{
+    opacity: 0.7;
+}
+  
+/* Set a specific color for each brand */
+  
+/* LinkedIn */
+.fa-linkedin
+{
+    width: 40px;
+    padding: 31px;
+    background: #007bb5;
+    color: white;
+}
+  
+/* GitHub */
+.fa-github 
+{
+    width: 60px;
+    color: white;
+}
+/* Animation code from: https://codepen.io/carloscdev/pen/mdBLmwP 
+   Small changes were made to suite my needs.
+*/
+.animation 
+{
+    height:50px;
+    overflow:hidden;
+    margin-left: 1rem;
+}
+
+.animation > div > div
+{
+    padding: 0.25rem 0.75rem;
+    height:2.81rem;
+    margin-bottom: 2.81rem;
+    display:inline-block;
+}
+  
+.animation div:first-child 
+{
+    animation: text-animation 14s infinite;
+}
+  
+.first div {
+    background-color: inherit;
+}
+.second div {
+    background-color: inherit;
+}
+
+.third div {
+    background-color: inherit;
+}
+
+.fourth div {
+    background-color: inherit;
+}
+  
+@keyframes text-animation {
+    0% {margin-top: 0;}
+    10% {margin-top: 0;}
+    20% {margin-top: -5.62rem;}
+    30% {margin-top: -5.62rem;}
+    40% {margin-top: -11.24rem;}
+    50% {margin-top: -11.24rem;}
+    60% {margin-top: -16.86rem;}
+    65% {margin-top: -16.86rem;}
+    70% {margin-top: -11.24rem;}
+    75% {margin-top: -11.24rem;}
+    80% {margin-top: -5.62rem;}
+    85% {margin-top: -5.62rem;}
+    90% {margin-top: 0;}
+    100% {margin-top: 0;}
+}
+/* End of animation code */
+
+#intro 
+{
+    font-size: 32px;
+}
+
+#name
+{
+    margin-left: 40px;
+    font-size: 48px;
+}
+
+#leftHalf
+{
+    position: relative;
+    width: 55%;
+    float: left;
+    height: 100%;
+    background-color: inherit;
+    z-index: 1010101010
+}
+
+#rightHalf
+{
+    position: relative;
+    width: auto;
+    float: left;
+    height: 100%;
+    background-color: inherit;
+    z-index: 1010101010
+}
+
+#researchExplanation
+{
+    position: relative;
+    width: 55%;
+    float: left;
+    height: 100%;
+    background-color: inherit;
+    z-index: 1010101010
+}
