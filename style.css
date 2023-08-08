@@ -168,7 +168,7 @@ h2
 #leftHalf
 {
     position: relative;
-    width: 55%;
+    width: 50%;
     float: left;
     height: 100%;
     background-color: inherit;
@@ -178,17 +178,8 @@ h2
 #rightHalf
 {
     position: relative;
+    margin-left: 5%;
     width: auto;
-    float: left;
-    height: 100%;
-    background-color: inherit;
-    z-index: 1010101010
-}
-
-#researchExplanation
-{
-    position: relative;
-    width: 55%;
     float: left;
     height: 100%;
     background-color: inherit;
