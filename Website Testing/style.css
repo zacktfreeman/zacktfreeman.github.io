@@ -1,0 +1,136 @@
+/*
+References used:
+    - Snapping animation: https://youtu.be/htw4iKMYzEc
+    - Grid transition w/ nav bar: https://css-tricks.com/animating-css-grid-how-to-examples/
+
+*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+section
+{
+    height: 100vh;
+    display: flex;
+    scroll-snap-align: start;
+    
+    align-items: center;
+}
+
+.intro
+{
+    display: block;
+    color: black;
+    background-color: rgba(245, 245, 245, 0.884);
+    position: relative;
+    text-align: left;
+    font-size: 40px;
+    padding: 2%;
+    padding-top: 5%;
+    width: 85%;
+    top: 0%;
+    height: 70%;
+    
+    box-shadow: -8px -8px 8px 8px rgba(0,0,0,.2);
+}
+
+
+.grid
+{
+    display: grid;
+    grid-template-columns: 2% auto;
+    transition: 300ms;
+}
+
+.left
+{
+    background-color: rgba(245, 245, 245, 0.884);
+}
+
+ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+li
+{
+    text-align: center;
+}
+
+li a
+{
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    padding: 5%;
+    color: black;
+}
+
+li a:hover 
+{
+    background-color: #0081A7;
+    color: white;
+}
+
+.left .navbar
+{
+    visibility: hidden;
+    color: black;
+}
+
+.grid:has(.left:hover) .navbar
+{
+    visibility: visible;
+    color: black;
+}
+
+.grid:has(.left:hover)
+{
+    grid-template-columns: 20% auto;
+    color: black;
+}
+
+.container
+{
+    scroll-snap-type: y proximity;
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.carina
+{
+    height: 30%;
+    bottom: 70%;
+    width: 85%;
+    background-image: url("carina_nebula_jwst_2.png");
+    background-size: cover;
+}
+
+.one
+{
+    background: #121212fa;
+    display: block;
+}
+
+.two
+{
+    background: rgb(211, 79, 79);
+}
+
+.three
+{
+    background: rgb(67, 91, 175);
+}
+
+.four
+{
+    background: lightsalmon;
+}
