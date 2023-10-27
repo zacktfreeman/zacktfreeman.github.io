@@ -3,7 +3,6 @@ References used:
     - Snapping animation: https://youtu.be/htw4iKMYzEc
     - Grid transition w/ nav bar: https://css-tricks.com/animating-css-grid-how-to-examples/
     - Grid transition for research: https://css-tricks.com/animating-css-grid-how-to-examples/
-    
 
 */
 
@@ -33,7 +32,6 @@ section
 
 .left
 {
-    text-orientation: upright;
     background: linear-gradient(to left, #007FFF, #E086D3);
 }
 
@@ -159,12 +157,11 @@ li a:hover
     border-bottom-style: dashed;
 }
 
-
-
 #research_grid
 {
     width: 100%;
     height: 100vh;
+    max-height: 100vh;
     transition: 500ms;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -178,19 +175,118 @@ li a:hover
     transition: 300ms;
 }
 
-:where(.research_left, .research_center, .research_right):hover {
+:where(.research_left, .research_center, .research_right):hover 
+{
     background: #2F3137;
+    height: 100vh;
 }
 
-#research_grid:has(.research_left:hover) {
+#research_grid:has(.research_left:hover) 
+{
     grid-template-columns: 2fr 0.5fr 0.5fr;
 }
 
-#research_grid:has(.research_center:hover) {
+#research_grid:has(.research_left:hover) .left_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#research_grid:has(.research_center:hover) 
+{
     grid-template-columns: 0.5fr 2fr 0.5fr;
 }
-#research_grid:has(.research_right:hover) {
+
+#research_grid:has(.research_center:hover) .center_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#research_grid:has(.research_right:hover) 
+{
     grid-template-columns: 0.5fr 0.5fr 2fr;
+}
+
+#research_grid:has(.research_right:hover) .right_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.research_left
+{
+    padding-top: 5%;
+}
+
+.left_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.left_image
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img 
+{
+    width: 100%;
+    height: auto;
+    max-width: 27vw;
+    border: black solid;
+}
+
+.left_text
+{
+    font-size: 0;
+}
+
+.research_center
+{
+    padding-top: 5%;
+}
+
+.center_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.center_text
+{
+    font-size: 0;
+}
+
+.research_right
+{
+    padding-top: 5%;
+}
+
+.right_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.right_text
+{
+    visibility: hidden;
+    font-size: 1vw;
+    padding-top: 3%;
 }
 
 .four
