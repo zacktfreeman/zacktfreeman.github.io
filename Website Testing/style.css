@@ -2,6 +2,8 @@
 References used:
     - Snapping animation: https://youtu.be/htw4iKMYzEc
     - Grid transition w/ nav bar: https://css-tricks.com/animating-css-grid-how-to-examples/
+    - Grid transition for research: https://css-tricks.com/animating-css-grid-how-to-examples/
+    
 
 */
 
@@ -155,6 +157,40 @@ li a:hover
 {
     border-bottom: #EDEABF;
     border-bottom-style: dashed;
+}
+
+
+
+#research_grid
+{
+    width: 100%;
+    height: 100vh;
+    transition: 500ms;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    background: #EDEABF;
+}
+
+:where(.research_left, .research_center, .research_right)
+{
+    background: #1D1E22;
+    transition: 300ms;
+}
+
+:where(.research_left, .research_center, .research_right):hover {
+    background: #2F3137;
+}
+
+#research_grid:has(.research_left:hover) {
+    grid-template-columns: 2fr 0.5fr 0.5fr;
+}
+
+#research_grid:has(.research_center:hover) {
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+}
+#research_grid:has(.research_right:hover) {
+    grid-template-columns: 0.5fr 0.5fr 2fr;
 }
 
 .four
