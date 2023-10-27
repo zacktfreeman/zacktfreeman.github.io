@@ -19,42 +19,8 @@ section
     display: flex;
     scroll-snap-align: start;
     align-items: center;
-    background-color: #c5d5cb;
+    background-color: #1D1E22;
 }
-
-.intro
-{
-    display: inline-flex;
-    color: black;
-    background-color: #c5d5cb;
-    position: relative;
-    text-align: left;
-    font-family: 'Lucida Console', 'Copperplate', 'Times New Roman';
-    font-size: 35px;
-    padding: 2%;
-    padding-top: 2%;
-    width: 100%;
-    top: 0%;
-    height: 70%;
-    border-top-style: solid;
-    border-top-color: black;
-    border-top-width: 3px;
-    
-}
-
-.block
-{
-    display: block;
-    color: black;
-    background-color: white;
-    width: 40%;
-    height: 80%;
-    padding: 3%;
-    margin: 2%;
-    border-radius: 8%;
-    border: solid;
-}
-
 
 .grid
 {
@@ -65,10 +31,8 @@ section
 
 .left
 {
-    background-color: rgba(245, 245, 245, 0.884);
-    border-right-style: solid;
-    border-right-color: black;
-    border-right-width: 3px;
+    text-orientation: upright;
+    background: linear-gradient(to left, #007FFF, #E086D3);
 }
 
 ul
@@ -95,8 +59,8 @@ li a
 
 li a:hover 
 {
-    background-color: #9fa8a3;
-    color: white;
+    background-color: #E086D3;
+    color: #FFF7EB;
 }
 
 .left .navbar
@@ -122,35 +86,79 @@ li a:hover
     scroll-snap-type: y proximity;
     overflow-y: scroll;
     height: 100vh;
-}
-
-.carina
-{
-    height: 30%;
-    bottom: 70%;
-    width: 100%;
-    background-image: url("carina_nebula_jwst_2.png");
-    background-size: cover;
+    background-color: #1D1E22; /* #c5d5cb */
+    font-size: 1vw;
+    color: #FFF7EB;
 }
 
 .one
 {
-    background: #121212fa;
     display: block;
-    border-bottom: solid;
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
+}
+
+.intro
+{
+    font-size: 3vw;
+    padding-top: 5%;
+    padding-left: 5%;
+    width: 100%;
+    height: 20%;
+    
+}
+
+.description
+{
+    font-size: 1.5vw;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
 }
 
 .two
 {
-    
+    display: block;
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
+}
+
+.univutah
+{
+    font-size: 3vw;
+    width: 90%;
+    height: 50%;
+    margin-left: 5%;
+    padding-top: 5%;
+}
+
+.compsci
+{
+    font-size: 1.5vw;
+    padding-left: 3%;
+}
+
+.physics
+{
+    font-size: 1.5vw;
+    padding-left: 3%;
+}
+
+.wsu
+{
+    font-size: 3vw;
+    margin-left: 5%;
+    width: 90%;
 }
 
 .three
 {
-    background: rgb(67, 91, 175);
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
 }
 
 .four
 {
-    background: lightsalmon;
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
 }
