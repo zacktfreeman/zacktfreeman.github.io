@@ -59,8 +59,9 @@ li a
 
 li a:hover 
 {
-    background-color: #E086D3;
+    background-color: #007FFF;
     color: #FFF7EB;
+    box-shadow: 0px 0px 4px black;
 }
 
 .left .navbar
@@ -284,9 +285,7 @@ img
 
 .right_text
 {
-    visibility: hidden;
-    font-size: 1vw;
-    padding-top: 3%;
+    font-size: 0;
 }
 
 .four
