@@ -67,7 +67,7 @@ li a
     color: black;
 }
 
-li a:hover 
+li a:hover, li a:active
 {
     background-color: #007FFF;
     color: #FFF7EB;
@@ -80,13 +80,13 @@ li a:hover
     color: black;
 }
 
-.grid:has(.left:hover) .navbar
+.grid:has(.left:hover, .left:active) .navbar
 {
     visibility: visible;
     color: black;
 }
 
-.grid:has(.left:hover)
+.grid:has(.left:hover, .left:active)
 {
     grid-template-columns: 20% auto;
     color: black;
@@ -186,18 +186,18 @@ li a:hover
     transition: 300ms;
 }
 
-:where(.research_left, .research_center, .research_right):hover 
+:where(.research_left, .research_center, .research_right):hover:active
 {
     background: #2F3137;
     height: 100vh;
 }
 
-#research_grid:has(.research_left:hover) 
+#research_grid:has(.research_left:hover, .research_left:active) 
 {
     grid-template-columns: 2fr 0.5fr 0.5fr;
 }
 
-#research_grid:has(.research_left:hover) .left_text
+#research_grid:has(.research_left:hover, .research_left:active) .left_text
 {
     visibility: visible;
     font-size: 1vw;
@@ -206,12 +206,12 @@ li a:hover
     padding-right: 5%;
 }
 
-#research_grid:has(.research_center:hover) 
+#research_grid:has(.research_center:hover, .research_center:active) 
 {
     grid-template-columns: 0.5fr 2fr 0.5fr;
 }
 
-#research_grid:has(.research_center:hover) .center_text
+#research_grid:has(.research_center:hover, .research_center:active) .center_text
 {
     visibility: visible;
     font-size: 1vw;
@@ -220,12 +220,12 @@ li a:hover
     padding-right: 5%;
 }
 
-#research_grid:has(.research_right:hover) 
+#research_grid:has(.research_right:hover, .research_right:active) 
 {
     grid-template-columns: 0.5fr 0.5fr 2fr;
 }
 
-#research_grid:has(.research_right:hover) .right_text
+#research_grid:has(.research_right:hover, .research_right:active) .right_text
 {
     visibility: visible;
     font-size: 1vw;
@@ -357,6 +357,7 @@ img
 }
 
 .card:not(:last-child):hover,
+.card:not(:last-child):active,
 .card:not(:last-child):focus-within 
 {
     transform: translateY(-1rem);
