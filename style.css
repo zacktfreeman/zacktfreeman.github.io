@@ -1,187 +1,368 @@
-body 
-{
+/*
+References used:
+    - Snapping animation: https://youtu.be/htw4iKMYzEc
+    - Grid transition w/ nav bar: https://css-tricks.com/animating-css-grid-how-to-examples/
+    - Grid transition for research: https://css-tricks.com/animating-css-grid-how-to-examples/
+    - Card deck: https://css-tricks.com/video-screencasts/171-movable-stacked-card-row-in-css/
+    - Custom scroll bar: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp
+
+*/
+
+
+* {
     margin: 0;
-    margin-top: 0px;
-    font-family: 'Ubuntu'; font-size: 22px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Console', 'Copperplate', 'Times New Roman';
 }
 
-main
+section
 {
-    margin-top: 5%;
-    margin-left: 8%;
-    width: auto;
-    background-color: inherit;
-    text-align: left;
-    color: #000000;
-    font-size: 24px;
-    font-family: inherit;
+    height: 100vh;
+    display: flex;
+    scroll-snap-align: start;
+    align-items: center;
+    background-color: #1D1E22;
 }
 
-html 
+.grid
 {
-    /* #4f4f96f6 */
-    background-color:#ebebf5f5;
-    
+    display: grid;
+    grid-template-columns: 2% auto;
+    transition: 300ms;
 }
 
-header ul 
+.left
+{
+    background: linear-gradient(to left, #007FFF, #E086D3);
+    border-right: solid black 3px;
+}
+
+ul
 {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #1b2021;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,.2);
+    width: 100%;
 }
-  
-header li
+
+li
 {
-    float: left;
+    text-align: center;
 }
-  
-header li a 
+
+.bot_nav
+{
+    position:fixed;
+    bottom: 0;
+    width: 20%;
+}
+
+li a
+{
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    padding: 5%;
+    color: black;
+}
+
+li a:hover 
+{
+    background-color: #007FFF;
+    color: #FFF7EB;
+    box-shadow: 0px 0px 4px black;
+}
+
+.left .navbar
+{
+    visibility: hidden;
+    color: black;
+}
+
+.grid:has(.left:hover) .navbar
+{
+    visibility: visible;
+    color: black;
+}
+
+.grid:has(.left:hover)
+{
+    grid-template-columns: 20% auto;
+    color: black;
+}
+
+.container
+{
+    scroll-snap-type: y proximity;
+    overflow-y: scroll;
+    height: 100vh;
+    background-color: #1D1E22; /* #c5d5cb */
+    font-size: 1vw;
+    color: #FFF7EB;
+}
+
+.one
 {
     display: block;
-    color: white;
-    text-align: center;
-    padding: 29px 16px;
-    text-decoration: none;
-}
-  
-/* Change the link color to #111 (black) on hover */
-header li a:hover 
-{
-    background-color: #111;
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
 }
 
-h2
+.intro
 {
-    color: #1b2021;
-    text-decoration: underline;
+    font-size: 3vw;
+    padding-top: 5%;
+    padding-left: 5%;
+    width: 100%;
+    height: 20%;
+    
 }
 
-#current a
+.description
 {
-    background-color: #4392f1;
+    font-size: 1.5vw;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
 }
 
-/* Style all font awesome icons */
-.fa 
+.two
 {
-    padding: 20px;
-    font-size: 30px;
-    width: 50px;
-    text-align: center;
-    text-decoration: none;
-}
-  
-/* Add a hover effect if you want */
-.fa:hover 
-{
-    opacity: 0.7;
-}
-  
-/* Set a specific color for each brand */
-  
-/* LinkedIn */
-.fa-linkedin
-{
-    width: 40px;
-    padding: 31px;
-    background: #007bb5;
-    color: white;
-}
-  
-/* GitHub */
-.fa-github 
-{
-    width: 60px;
-    color: white;
-}
-/* Animation code from: https://codepen.io/carloscdev/pen/mdBLmwP 
-   Small changes were made to suite my needs.
-*/
-.animation 
-{
-    height:50px;
-    overflow:hidden;
-    margin-left: 1rem;
+    display: block;
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
 }
 
-.animation > div > div
+.univutah
 {
-    padding: 0.25rem 0.75rem;
-    height:2.81rem;
-    margin-bottom: 2.81rem;
-    display:inline-block;
-}
-  
-.animation div:first-child 
-{
-    animation: text-animation 14s infinite;
-}
-  
-.first div {
-    background-color: inherit;
-}
-.second div {
-    background-color: inherit;
-}
-
-.third div {
-    background-color: inherit;
-}
-
-.fourth div {
-    background-color: inherit;
-}
-  
-@keyframes text-animation {
-    0% {margin-top: 0;}
-    10% {margin-top: 0;}
-    20% {margin-top: -5.62rem;}
-    30% {margin-top: -5.62rem;}
-    40% {margin-top: -11.24rem;}
-    50% {margin-top: -11.24rem;}
-    60% {margin-top: -16.86rem;}
-    65% {margin-top: -16.86rem;}
-    70% {margin-top: -11.24rem;}
-    75% {margin-top: -11.24rem;}
-    80% {margin-top: -5.62rem;}
-    85% {margin-top: -5.62rem;}
-    90% {margin-top: 0;}
-    100% {margin-top: 0;}
-}
-/* End of animation code */
-
-#intro 
-{
-    font-size: 32px;
-}
-
-#name
-{
-    margin-left: 40px;
-    font-size: 48px;
-}
-
-#leftHalf
-{
-    position: relative;
-    width: 50%;
-    float: left;
-    height: 100%;
-    background-color: inherit;
-    z-index: 1010101010
-}
-
-#rightHalf
-{
-    position: relative;
+    font-size: 3vw;
+    width: 90%;
+    height: 75%;
     margin-left: 5%;
-    width: auto;
-    float: left;
-    height: 100%;
-    background-color: inherit;
-    z-index: 1010101010
+    padding-top: 3%;
+}
+
+.compsci
+{
+    font-size: 1.5vw;
+    padding-left: 3%;
+}
+
+.physics
+{
+    font-size: 1.5vw;
+    padding-left: 3%;
+}
+
+.wsu
+{
+    font-size: 3vw;
+    margin-left: 5%;
+    width: 90%;
+}
+
+.three
+{
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
+}
+
+#research_grid
+{
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    transition: 500ms;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    background: #EDEABF;
+}
+
+:where(.research_left, .research_center, .research_right)
+{
+    background: #1D1E22;
+    transition: 300ms;
+}
+
+:where(.research_left, .research_center, .research_right):hover 
+{
+    background: #2F3137;
+    height: 100vh;
+}
+
+#research_grid:has(.research_left:hover) 
+{
+    grid-template-columns: 2fr 0.5fr 0.5fr;
+}
+
+#research_grid:has(.research_left:hover) .left_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#research_grid:has(.research_center:hover) 
+{
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+}
+
+#research_grid:has(.research_center:hover) .center_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#research_grid:has(.research_right:hover) 
+{
+    grid-template-columns: 0.5fr 0.5fr 2fr;
+}
+
+#research_grid:has(.research_right:hover) .right_text
+{
+    visibility: visible;
+    font-size: 1vw;
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.research_left
+{
+    padding-top: 5%;
+}
+
+.left_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.left_image
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img 
+{
+    width: 100%;
+    height: auto;
+    max-width: 27vw;
+    border: black solid;
+}
+
+.left_text
+{
+    font-size: 0;
+}
+
+.research_center
+{
+    padding-top: 5%;
+}
+
+.center_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.center_text
+{
+    font-size: 0;
+}
+
+.research_right
+{
+    padding-top: 5%;
+}
+
+.right_title
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.right_text
+{
+    font-size: 0;
+}
+
+.four
+{
+    border-bottom: #EDEABF;
+    border-bottom-style: dashed;
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.cards 
+{
+    padding: 3%;
+    display: flex;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 80%;
+}
+
+/* width */
+::-webkit-scrollbar 
+{
+    width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track 
+{
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb 
+{
+    background: #007FFF;
+    border-radius: 10px;
+}
+
+.card 
+{
+    background: #EDEABF;
+    color: black;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: -5px 8px 12px 2px black;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.card:not(:first-child) 
+{
+    margin-left: -2rem;
+}
+
+.card:not(:last-child):hover,
+.card:not(:last-child):focus-within 
+{
+    transform: translateY(-1rem);
+    transform: rotate(5deg);
+    ~ .card 
+    {
+        transform: translateX(3rem);
+    }
 }
