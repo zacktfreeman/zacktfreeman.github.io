@@ -49,7 +49,6 @@ References used:
     .right
     {
         width: 100vw;
-        
     }
 
     .left .navbar
@@ -68,8 +67,6 @@ References used:
         height: 100vh;
         visibility: visible;
         color: black;
-        border-bottom-left-radius: 1%;
-        border-bottom-right-radius: 1%;
     }
 
     ul
