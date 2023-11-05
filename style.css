@@ -352,7 +352,6 @@ References used:
     .left
     {
         background: linear-gradient(to left, #007FFF, #E086D3);
-        border-right: solid black 3px;
         padding: 0%;
         border-bottom-left-radius: 0%;
         border-bottom-right-radius: 0%;
@@ -400,6 +399,13 @@ References used:
     {
         visibility: hidden;
         color: black;
+    }
+
+    .left .navbar .bot_nav #close_button
+    {
+        font-size: 0;
+        visibility: hidden;
+        height: 0;
     }
     
     .grid:has(.left:hover, .left:active) .navbar
