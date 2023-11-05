@@ -10,24 +10,27 @@
     
     <div class = "grid">
         <div class = "left">
-            <div class = "navbar">
-                <ul>
-                    <li><a href="#one">Home</a></li>
-                    <li><a href="#two">Education</a></li>
-                    <li><a href="#three">Research</a></li>
-                    <li><a href="#four">About Me</a></li>
-                    
-                </ul>
-
-                <div class = "bot_nav">
+            <input type = "checkbox" id = "activate-navbar">
+            <label for = "activate-navbar">
+                <div class = "navbar">
                     <ul>
-                        <li><a href = "./zack_freeman_resume_10_2023_ver2.pdf" target="_blank">Resume</a></li>
-                        <li><a href = "https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank">LinkedIn</a></li>
-                        <li><a href = "https://github.com/zacktfreeman" target="_blank">GitHub</a></li>
+                        <li><a href="#one">Home</a></li>
+                        <li><a href="#two">Education</a></li>
+                        <li><a href="#three">Research</a></li>
+                        <li><a href="#four">About Me</a></li>
+                        
                     </ul>
-                </div>
+
+                    <div class = "bot_nav">
+                        <ul>
+                            <li><a href = "./zack_freeman_resume_10_2023_ver2.pdf" target="_blank">Resume</a></li>
+                            <li><a href = "https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank">LinkedIn</a></li>
+                            <li><a href = "https://github.com/zacktfreeman" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
                 
-            </div>
+                </div>
+            </label>
             
         </div>
         <div class = "right">
@@ -86,17 +89,21 @@
                     </div>
                     <div class = "wsu">
                         <p> Weber State University | <i style="font-size: 1.5vw;">2018 - 2020</i></p>
-                        <p style= "padding-left: 3%; font-size: 1vw;"> <br>Throughout high school I attended Weber State University (WSU) as an early college student. Many of my courses were through Project Lead The Way (PLTW) and were STEM focused. 
-                            Once I graduated high school, I also graduated from WSU with my Associates of Science.
-                        </p>
+                        <div class = "wsu_description">
+                            <p> <br>Throughout high school I attended Weber State University (WSU) as an early college student. Many of my courses were through Project Lead The Way (PLTW) and were STEM focused. 
+                                Once I graduated high school, I also graduated from WSU with my Associates of Science.
+                            </p>
+                        </div>
                     </div>
+                    
+                        
                 </section>
         
                 <section class = "three" id="three">
                     <div id = "research_grid">
                         <div class = "research_left">
                             <div class = "left_title">
-                                <p>Searching for Black Holes in Omega Centauri</p>
+                                <h1>Searching for Black Holes in Omega Centauri</h1>
                             </div>
                     
                             <div class = "left_image">
@@ -115,7 +122,7 @@
 
                         <div class = "research_center">
                             <div class = "center_title">
-                                <p>Globular Clusters and Black Holes</p>
+                                <h1>Globular Clusters and Black Holes</h1>
                             </div>
 
                             <div class = "center_text">
@@ -139,7 +146,7 @@
 
                         <div class = "research_right">
                             <div class = "right_title">
-                                <p>Microlensing and Summary</p>
+                                <h1>Microlensing and Summary</h1>
                             </div>
                     
                             <div class = "right_text">
@@ -164,7 +171,7 @@
                                 <h1><u>Summary</u></h1>
                                     <p>
                                         <br>
-                                        To reiterate, I am searching for a microlensing event caused by a black hole in the largest globular cluster in our galaxy, the Milky Way, using Hubble Space Telescope observations from the past ~12 years.
+                                        To reiterate, I am searching for a microlensing event caused by a black hole in the largest globular cluster in the Galaxy, Omega Centauri, using Hubble Space Telescope observations from the past ~20 years.
                                         If you want to learn more about this project, feel free to reach out to me!
                                     </p>
                             </div>
@@ -198,6 +205,7 @@
                         <div class = "card">
                             <figure> <img src = "naruto.png"> </figure>
                             <h2>Anime</h2>
+                            <p>+ a bit of manga</p>
                         </div>
                         <div class = "card">
                             <figure> <img src = "terraria.jpg"> </figure>
