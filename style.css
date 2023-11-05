@@ -254,6 +254,8 @@ References used:
         display: grid;
         place-items: center;
         overflow: hidden;
+        font-size: 3vw;
+        text-align: center;
     }
     
     .cards 
@@ -264,7 +266,7 @@ References used:
         overflow-x: scroll;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        height: 80%;
+        height: 25vh;
         width: 80%;
     }
     
@@ -306,6 +308,7 @@ References used:
         box-shadow: -5px 8px 12px 2px black;
         transition: 0.2s;
         text-align: center;
+        height: 15vh;
     }
     
     .card:not(:first-child) 
