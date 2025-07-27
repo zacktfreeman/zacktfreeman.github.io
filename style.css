@@ -26,17 +26,14 @@ body {
     width: 90%;
     text-align: center;
     margin: 40px auto;
-    min-height: 0;
     height: auto;
     box-sizing: border-box;
-    overflow: visible;
 }
 
 /* Responsive: Increase height on smaller screens */
 @media (max-width: 600px) {
     .center-rectangle {
         min-height: 70vh;
-        height: 80vh;
         padding: 2rem 1rem;
     }
     .button-row button {
