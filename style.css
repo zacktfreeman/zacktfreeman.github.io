@@ -14,6 +14,7 @@ body {
     justify-content: center;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
+
 .center-rectangle {
     background: #fff;
     color: #222;
@@ -24,12 +25,11 @@ body {
     max-width: 600px;
     width: 90%;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 350px;
-    height: 60vh;
+    margin: 40px auto;
+    min-height: 0;
+    height: auto;
     box-sizing: border-box;
+    overflow: visible;
 }
 
 /* Responsive: Increase height on smaller screens */
