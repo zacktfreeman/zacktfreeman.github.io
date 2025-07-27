@@ -26,8 +26,10 @@ body {
     width: 90%;
     text-align: center;
     margin: 40px auto;
+    min-height: 60vh;
     height: auto;
     box-sizing: border-box;
+    position: relative;
 }
 
 /* Responsive: Increase height on smaller screens */
@@ -59,9 +61,11 @@ body {
     margin-top: 2rem;
     margin-bottom: 0;
     gap: 1rem; /* Add space between buttons */
-    width: 100%;
+    width: 90%;
     align-self: flex-end;
     justify-content: center;
+    position: absolute;
+    bottom: 1rem;  /* Position buttons at the bottom */
 }
 
 .button-row button {
