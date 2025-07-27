@@ -26,10 +26,20 @@ body {
     width: 90%;
     text-align: center;
     margin: 40px auto;
-    min-height: 60vh;
+    min-height: 70vh;
     height: auto;
     box-sizing: border-box;
     position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#content-area {
+    flex: 1 1 auto;             /* Add: makes content area grow to fill space */
+    display: flex;              /* Optional: for vertical alignment */
+    flex-direction: column;     /* Optional: for vertical alignment */
+    justify-content: flex-start;/* Optional: for vertical alignment */
 }
 
 /* Responsive: Increase height on smaller screens */
@@ -61,11 +71,11 @@ body {
     margin-top: 2rem;
     margin-bottom: 0;
     gap: 1rem; /* Add space between buttons */
-    width: 90%;
+    width: 100%;
     align-self: flex-end;
     justify-content: center;
-    position: absolute;
-    bottom: 1rem;  /* Position buttons at the bottom */
+    /* position: absolute;
+    bottom: 1rem; */
 }
 
 .button-row button {
@@ -103,6 +113,17 @@ body {
     margin: 0.5rem auto 1rem auto;
     width: 110px;
     height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #4fc3f7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.ocen-pic {
+    display: block;
+    margin: 0.5rem auto 1rem auto;
+    width: 220px;
+    height: 220px;
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #4fc3f7;
