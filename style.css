@@ -1,747 +1,135 @@
-/*
-References used:
-    - Snapping animation: https://youtu.be/htw4iKMYzEc
-    - Grid transition w/ nav bar: https://css-tricks.com/animating-css-grid-how-to-examples/
-    - Grid transition for research: https://css-tricks.com/animating-css-grid-how-to-examples/
-    - Card deck: https://css-tricks.com/video-screencasts/171-movable-stacked-card-row-in-css/
-    - Custom scroll bar: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp
-
-*/
-
-
+/* style.css */
 * {
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    font-weight: 700;
+}
+
+body {
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    /* Gradient background */
+    background: linear-gradient(155deg, #467cdf 0%, #414345 30%, #414345 70%, #467cdf 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.center-rectangle {
+    background: #fff;
+    color: #222;
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+    border: 2px solid #000000;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    height: 60vh;
     box-sizing: border-box;
-    font-family: 'Lucida Console', 'Copperplate', 'Times New Roman';
 }
 
-@media only screen and (max-width: 767px) 
-{
-
-    section
-    {
-        padding-top: 3vh;
-        padding-bottom: 5vh;
-        height: auto;
+/* Responsive: Increase height on smaller screens */
+@media (max-width: 600px) {
+    .center-rectangle {
+        min-height: 70vh;
+        height: 80vh;
+        padding: 2rem 1rem;
     }
-
-    .grid
-    {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        background-color: #1D1E22;
-        color: #FFF7EB;
-        
-    }
-
-    figcaption 
-    {
-        color: #FFF7EB;
-        font-style: italic;
-        padding: 2px;
-        text-align: center;
-      }
-
-    .left
-    {
-        background: #007FFF;
-        border-bottom-left-radius: 5%;
-        border-bottom-right-radius: 5%;
-        position: fixed;
-        width: 100vw;
-    }
-
-    .right
-    {
-        width: 100vw;
-    }
-
-    .left .navbar
-    {
-        color: black;
-        visibility: hidden;
-        height: 5vh;
-        padding-top: 5vh;
-    }
-
-    #activate-navbar{display:none}
-
-    #activate-navbar:checked ~ label
-    .navbar
-    {
-        height: 100vh;
-        visibility: visible;
-        color: black;
-    }
-
-    ul
-    {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
-
-    li
-    {
-        text-align: center;
-    }
-
-    li a
-    {
-        text-align: center;
-        display: block;
-        text-decoration: none;
-        padding: 5%;
-        color: black;
-    }
-
-    li a:active
-    {
-        background-color: #007FFF;
-        color: #FFF7EB;
-        box-shadow: 0px 0px 4px black;
-    }
-
-    .container
-    {
-        overflow-y: scroll;
-        width: 100vw;
-        height: 100vh;
-        background-color: #1D1E22; /* #c5d5cb */
-        font-size: 5vw;
-        color: #FFF7EB;
-    }
-
-    .one
-    {
-        margin-top: 5vh;
-        height: 95vh;
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-        
-        display: block;
-    }
-
-    .one img 
-    {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-        height: auto;
-        border: black solid;
-    }
-
-    .intro
-    {
-        font-size: 5vw;
-        padding-top: 5%;
-        padding-left: 5%;
-        width: 100%;
-        height: 10%;
-    }
-    
-    .description
-    {
-        font-size: 4vw;
-        margin: 5%;
-    }
-
-    .two
-    {
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-    }
-
-    .univutah
-    {
-        font-size: 5vw;
-        width: 90%;
-        height: 75%;
-        margin-left: 5%;
-        padding-top: 3%;
-    }
-    
-    .compsci
-    {
-        font-size: 4vw;
-        padding-left: 3%;
-    }
-    
-    .physics
-    {
-        font-size: 4vw;
-        padding-left: 3%;
-    }
-    
-    .wsu
-    {
-        padding-top: 5%;
-        font-size: 5vw;
-        margin-left: 5%;
-        width: 90%;
-    }
-
-    .wsu_description
-    {
-        padding-left: 3%;
-        font-size: 4vw;
-    }
-
-    .three
-    {
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-        width: 100vw;
-    }
-
-    .research_left
-    {
-        padding-top: 5%;
-    }
-    
-    .left_title
-    {
-        font-size: 4vw;
-        text-align: center;
-    }
-    
-    .left_image
-    {
-        margin-left: auto;
-        margin-right: auto;
-        width: 25%;
-    }
-
-    .left_image img 
-    {
-        width: 100%;
-        height: auto;
-        max-width: 27vw;
-        border: black solid;
-    }
-    
-    .left_text
-    {
-        font-size: 3vw;
-        padding-left: 3vw;
-        padding-right: 3vw;
-    }
-    
-    .research_center
-    {
-        padding-top: 5%;
-    }
-    
-    .center_title
-    {
-        font-size: 4vw;
-        text-align: center;
-    }
-    
-    .center_text
-    {
-        font-size: 3vw;
-        padding-left: 3vw;
-        padding-right: 3vw;
-    }
-    
-    .research_right
-    {
-        padding-top: 5%;
-    }
-    
-    .right_title
-    {
-        font-size: 4vw;
-        text-align: center;
-    }
-    
-    .right_text
-    {
-        font-size: 3vw;
-        padding-left: 3vw;
-        padding-right: 3vw;
-    }
-
-    .four
-    {
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-        margin: 0;
-        height: 100vh;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-        font-size: 3vw;
-        text-align: center;
-    }
-    
-    .cards 
-    {
-        padding: 3%;
-        display: flex;
-        white-space: nowrap;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        height: 25vh;
-        width: 80%;
-    }
-    
-    /* width */
-    ::-webkit-scrollbar 
-    {
-        width: 20px;
-    }
-    
-    /* Track */
-    ::-webkit-scrollbar-track 
-    {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-    
-    /* Handle */
-    ::-webkit-scrollbar-thumb 
-    {
-        background: #007FFF;
-        border-radius: 10px;
-    }
-
-    .card img 
-    {
-        width: 100%;
-        height: auto;
-        max-width: 27vw;
-        border: black solid;
-    }
-    
-    .card 
-    {
-        background: #EDEABF;
-        color: black;
-        font-size: 2vw;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: -5px 8px 12px 2px black;
-        transition: 0.2s;
-        text-align: center;
-        height: 15vh;
-    }
-    
-    .card:not(:first-child) 
-    {
-        margin-left: -2rem;
-    }
-    
-    .card:not(:last-child):hover,
-    .card:not(:last-child):active,
-    .card:not(:last-child):focus-within 
-    {
-        transform: translateY(-1rem);
-        transform: rotate(5deg);
-        ~ .card 
-        {
-            transform: translateX(3rem);
-        }
+    .button-row button {
+        font-size: 1.1rem;
+        padding: 1.2rem 0;
     }
 }
 
-/* Desktop design */
-@media only screen and (min-width: 768px) 
-{
-    section
-    {
-        height: 100vh;
-        display: flex;
-        scroll-snap-align: start;
-        align-items: center;
-        background-color: #1D1E22;
-    }
-    
-    .grid
-    {
-        display: grid;
-        grid-template-columns: 2% auto;
-        transition: 300ms;
-        
-    }
-    
-    .left
-    {
-        background: linear-gradient(to left, #007FFF, #E086D3);
-        padding: 0%;
-        border-bottom-left-radius: 0%;
-        border-bottom-right-radius: 0%;
-    }
+.center-rectangle h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
 
-    #activate-navbar{display:none}
-    
-    ul
-    {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
-    
-    li
-    {
-        text-align: center;
-    }
-    
-    .bot_nav
-    {
-        position:fixed;
-        bottom: 0;
-        width: 20%;
-    }
-    
-    li a
-    {
-        text-align: center;
-        display: block;
-        text-decoration: none;
-        padding: 5%;
-        color: black;
-    }
-    
-    li a:hover, li a:active
-    {
-        background-color: #007FFF;
-        color: #FFF7EB;
-        box-shadow: 0px 0px 4px black;
-    }
-    
-    .left .navbar
-    {
-        visibility: hidden;
-        color: black;
-    }
+.center-rectangle p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
 
-    .left .navbar .bot_nav #close_button
-    {
-        font-size: 0;
-        visibility: hidden;
-        height: 0;
-    }
-    
-    .grid:has(.left:hover, .left:active) .navbar
-    {
-        visibility: visible;
-        color: black;
-    }
-    
-    .grid:has(.left:hover, .left:active)
-    {
-        grid-template-columns: 20% auto;
-        color: black;
-    }
-    
-    .container
-    {
-        scroll-snap-type: y proximity;
-        overflow-y: scroll;
-        height: 100vh;
-        background-color: #1D1E22; /* #c5d5cb */
-        font-size: 1vw;
-        color: #FFF7EB;
-    }
-    
-    .one
-    {
-        display: flex;
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-    }
+.button-row {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    gap: 1rem; /* Add space between buttons */
+    width: 100%;
+    align-self: flex-end;
+    justify-content: center;
+}
 
-    .one .text
-    {
-        display: block;
-    }
+.button-row button {
+    flex: 1;
+    padding: 0.9rem 0;
+    background: #f4f4f4;
+    border: none;
+    border-radius: 999px; /* Pill shape */
+    font-size: 1rem;
+    font-weight: 500;
+    color: #222;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin: 0;
+    border-right: none; /* Remove border between buttons */
+}
 
-    .one img
-    {
-        width: auto;
-        height: 60vh;
-        margin: 5%;
-        border: black solid;
-    }
-    
-    .intro
-    {
-        font-size: 3vw;
-        padding-top: 5%;
-        padding-left: 5%;
-        width: 100%;
-        height: 20%;
-        
-    }
-    
-    .description
-    {
-        font-size: 1.5vw;
-        width: 100%;
-        height: 80%;
-        margin: 5%;
-    }
-    
-    .two
-    {
-        display: block;
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-    }
-    
-    .univutah
-    {
-        font-size: 3vw;
-        width: 90%;
-        height: 75%;
-        margin-left: 5%;
-        padding-top: 3%;
-    }
-    
-    .compsci
-    {
-        font-size: 1.3vw;
-        padding-left: 3%;
-    }
-    
-    .physics
-    {
-        font-size: 1.3vw;
-        padding-left: 3%;
-    }
-    
-    .wsu
-    {
-        font-size: 3vw;
-        margin-left: 5%;
-        width: 90%;
-    }
+.button-row button:last-child {
+    border-right: none;
+}
 
-    .wsu_description
-    {
-        padding-left: 3%;
-        font-size: 1.3vw;
-    }
-    
-    .three
-    {
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-    }
-    
-    #research_grid
-    {
-        width: 100%;
-        height: 100vh;
-        max-height: 100vh;
-        transition: 500ms;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 3px;
-        background: #EDEABF;
-    }
-    
-    :where(.research_left, .research_center, .research_right)
-    {
-        background: #1D1E22;
-        transition: 300ms;
-    }
-    
-    :where(.research_left, .research_center, .research_right):hover:active
-    {
-        background: #2F3137;
-        height: 100vh;
-    }
-    
-    #research_grid:has(.research_left:hover, .research_left:active) 
-    {
-        grid-template-columns: 2fr 0.5fr 0.5fr;
-    }
-    
-    #research_grid:has(.research_left:hover, .research_left:active) .left_text
-    {
-        visibility: visible;
-        font-size: 1.3vw;
-        padding-top: 3%;
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-    
-    #research_grid:has(.research_center:hover, .research_center:active) 
-    {
-        grid-template-columns: 0.5fr 2fr 0.5fr;
-    }
-    
-    #research_grid:has(.research_center:hover, .research_center:active) .center_text
-    {
-        visibility: visible;
-        font-size: 1.3vw;
-        padding-top: 3%;
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-    
-    #research_grid:has(.research_right:hover, .research_right:active) 
-    {
-        grid-template-columns: 0.5fr 0.5fr 2fr;
-    }
-    
-    #research_grid:has(.research_right:hover, .research_right:active) .right_text
-    {
-        visibility: visible;
-        font-size: 1.3vw;
-        padding-top: 3%;
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-    
-    .research_left
-    {
-        padding-top: 5%;
-    }
-    
-    .left_title
-    {
-        font-size: 2.5vw;
-        text-align: center;
-    }
-    
-    .left_image
-    {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-    }
+.button-row button:hover {
+    background: #b3e0ff;
+    color: #222;
+}
 
-    .left_image img
-    {
-        width: 100%;
-        height: auto;
-        max-width: 27vw;
-        border: black solid;
-    }
-    
-    .left_text
-    {
-        font-size: 0;
-    }
-    
-    .research_center
-    {
-        padding-top: 5%;
-    }
-    
-    .center_title
-    {
-        font-size: 2.5vw;
-        text-align: center;
-    }
-    
-    .center_text
-    {
-        font-size: 0;
-    }
-    
-    .research_right
-    {
-        padding-top: 5%;
-    }
-    
-    .right_title
-    {
-        font-size: 2.5vw;
-        text-align: center;
-    }
-    
-    .right_text
-    {
-        font-size: 0;
-    }
-    
-    .four
-    {
-        border-bottom: #EDEABF;
-        border-bottom-style: dashed;
-        margin: 0;
-        height: 100vh;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-    }
-    
-    .cards 
-    {
-        padding: 3%;
-        display: flex;
-        white-space: nowrap;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        width: 80%;
-    }
+.button-row button.active {
+    border: 2px solid #4fc3f7;
+    background: #e3f4fd;
+    color: #222;
+}
 
-    .card img 
-    {
-        width: 100%;
-        height: auto;
-        max-width: 27vw;
-        border: black solid;
-    }
-    
-    /* width */
-    ::-webkit-scrollbar 
-    {
-        width: 20px;
-    }
-    
-    /* Track */
-    ::-webkit-scrollbar-track 
-    {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-    
-    /* Handle */
-    ::-webkit-scrollbar-thumb 
-    {
-        background: #007FFF;
-        border-radius: 10px;
-    }
-    
-    .card 
-    {
-        background: #EDEABF;
-        color: black;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: -5px 8px 12px 2px black;
-        transition: 0.2s;
-        text-align: center;
-    }
-    
-    .card:not(:first-child) 
-    {
-        margin-left: -2rem;
-    }
-    
-    .card:not(:last-child):hover,
-    .card:not(:last-child):active,
-    .card:not(:last-child):focus-within 
-    {
-        transform: translateY(-1rem);
-        transform: rotate(5deg);
-        ~ .card 
-        {
-            transform: translateX(3rem);
-        }
-    }
+.profile-pic {
+    display: block;
+    margin: 0.5rem auto 1rem auto;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #4fc3f7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.about-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+}
+
+.pill-link {
+    display: inline-block;
+    padding: 0.35em 1.1em;
+    border-radius: 999px;
+    background: #e3f4fd;
+    color: #1976d2;
+    font-size: 0.98rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid #4fc3f7;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.pill-link:hover {
+    background: #b3e0ff;
+    color: #0d47a1;
+    border-color: #1976d2;
 }

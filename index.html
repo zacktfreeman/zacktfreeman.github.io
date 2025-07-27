@@ -1,232 +1,108 @@
 <!DOCTYPE html>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html lang="en">
 <head>
-    <link rel = "stylesheet" href = "style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
+    <title>Home</title>
 </head>
 <body>
-    
-    <div class = "grid">
-        <div class = "left">
-            <input type = "checkbox" id = "activate-navbar">
-            <label for = "activate-navbar">
-                <div class = "navbar">
-                    <ul>
-                        <li><a href="#one">Home</a></li>
-                        <li><a href="#two">Education</a></li>
-                        <li><a href="#three">Research</a></li>
-                        <li><a href="#four">About Me</a></li>
-                        
-                    </ul>
-
-                    <div class = "bot_nav">
-                        <ul>
-                            <li><a href = "./zack_freeman_resume_11_2023.pdf" target="_blank">Resume</a></li>
-                            <li><a href = "https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank">LinkedIn</a></li>
-                            <li><a href = "https://github.com/zacktfreeman" target="_blank">GitHub</a></li>
-                            <li id = "close_button"><a>Close</a></li>
-                        </ul>
-                    </div>
-                
-                </div>
-            </label>
-            
-        </div>
-        <div class = "right">
-            <div class = "container">
-                <section class = "one" id="one">
-                    <div class = "text">
-                        <div class = "intro">
-                        
-                            <p> Hey, my name is Zack Freeman </p>
-    
-                        </div>
-    
-                        <div class= "description">
-    
-                            <p>
-                                I am currently a 4th year undergraduate student at the <u>University of Utah</u>, studying <u>computer science and physics</u>. My expected graduation date is in spring of 2025.
-                                <br><br><br>
-                                If you're in a rush, feel free to download my <u>resume</u> in the nav bar (psst! Mobile users click the blue section up top. Desktop users can hover over the left side). 
-                                You can also find my <u>GitHub</u> and <u>LinkedIn</u> accounts there too.
-                                <br><br><br>
-                                If not, keep scrolling to learn more about me!
-                                <br><br><br>
-                                Photographer: Deston Anderson
-                            
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <img src = "Portrait.jpg">
-                    
-                </section>
-        
-                <section class = "two" id="two">
-                    <div class = "univutah">
-                        <p> University of Utah | <i style="font-size: 1.5vw;">2020 - Expected Graduation 2025</i></p>
-                        
-                        <div class = "compsci">
-                            <br>
-                            <p><u>Computer Science</u></p>
-                            <br>
-                            <p style= "padding-left: 3%;"> Groups: </p>
-                            <p style= "padding-left: 5%;"> Kahlert School of Computing (KSoC) Undergraduate Student Advisory Committee (UgSAC)</p>
-                            <p style= "padding-left: 3%;"> <br>Key Courses: </p>
-                            <p style = "padding-left: 5%;">CS 4150 - Algorithms, CS 3190 - Foundations of Data Analysis,
-                                CS 3505 - Software Practice II, CS 3500 - Software Practice I, CS 2420 - Data Structures and Algorithms
-                            </p>
-                        </div>
-                        <br>
-                        <div class = "physics">
-                            <p><u>Physics</u></p>
-                            <br>
-                            <p style= "padding-left: 3%;"> Groups: </p>
-                            <p style= "padding-left: 5%;"> 
-                                Learning Assistant - Foundations of Astronomy (<i>Fall 2022</i>) <br>
-                                Physics and Astronomy (PANDA) Committee Member (<i>Fall 2022</i>) <br>
-                                Physics and Astronomy (PANDA) Mentor (<i>Spring 2022</i>)
-                            </p>
-                            <p style= "padding-left: 3%;"> <br>Key Courses: </p>
-                            <p style = "padding-left: 5%;">
-                                Physics 4080 - Intro to Cosmology, Physics 4070 - Extragalactic Astrophysics,
-                                Math 2250 - Differential Equations and Linear Algebra, Physics 3010 - Intermediate Mechanics
-                            </p>
-                        </div>
-                    </div>
-                    <div class = "wsu">
-                        <p> Weber State University | <i style="font-size: 1.5vw;">2018 - 2020</i></p>
-                        <div class = "wsu_description">
-                            <p> <br>Throughout high school I attended Weber State University (WSU) as an early college student. Many of my courses were through Project Lead The Way (PLTW) and were STEM focused. 
-                                Once I graduated high school, I also graduated from WSU with my Associates of Science.
-                            </p>
-                        </div>
-                    </div>
-                    
-                        
-                </section>
-        
-                <section class = "three" id="three">
-                    <div id = "research_grid">
-                        <div class = "research_left">
-                            <div class = "left_title">
-                                <h1>Searching for Black Holes in Omega Centauri</h1>
-                            </div>
-                    
-                            <div class = "left_image">
-                                <img src = "omegacen.jpg" width = "auto" height = "auto">
-                            </div>
-                    
-                            <div class = "left_text">
-                                <p>
-                                    My research involves the detection of stellar mass black holes (black holes with a mass similar to our Sun) in a globular cluster named Omega Centauri. 
-                                    To search for these black holes, I use a method of detection known as microlensing. What does all of this mean though?
-                                    <br><br>
-                                    This project is advised by Dr. Anil Seth and Max Häberle.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class = "research_center">
-                            <div class = "center_title">
-                                <h1>Globular Clusters and Black Holes</h1>
-                            </div>
-
-                            <div class = "center_text">
-                                <h1><u>Globular Clusters</u></h1>
-                                <p>
-                                    <br>
-                                    First, let's define what a globular cluster is. Broadly, a globular cluster is a group of stars that are all born around the same time. Omega Centauri is a globular cluster that is located within our galaxy, the Milky Way.
-                                    Omega Centauri is special for this research project for a couple reasons: <br><br> 1) it is the most massive globular cluster in our galaxy, and <br>2) it has been observed by the Hubble Space Telescope hundreds of times over
-                                    the last ~20 years! <br><br>
-                                    <br>
-                                </p>
-                                <h1><u>Black Holes</u></h1>
-                                <p>
-                                    <br>
-                                    Black holes are a result of stellar evolution. Stars, like humans, go through different phases throughout their life. For massive stars (stars roughly 18x more massive than our Sun), they end their life by forming black holes.
-                                    Since Omega Centauri is so massive (<b>point #1!</b>), which means there are lots of stars, we expect there to be thousands of stellar mass black holes in the core.
-                                </p>
-                                
-                            </div>
-                        </div>
-
-                        <div class = "research_right">
-                            <div class = "right_title">
-                                <h1>Microlensing and Summary</h1>
-                            </div>
-                    
-                            <div class = "right_text">
-                                <h1><u>Microlensing</u></h1>
-                                    <p>
-                                        <br>
-                                        Microlensing is a subset of an event known as gravitational lensing. Gravitational lensing is when there is an object so massive, that it will bend light that passes by it; this object is referred to as a 'lens'. From 
-                                        an observer's point of view, the lens will cause an increase in brightness of a background source (such as a star) if the lensing event is small (microlensing), or it could cause 
-                                        <a href = "https://www.nasa.gov/image-feature/goddard/2022/nasa-s-webb-delivers-deepest-infrared-image-of-universe-yet">multiple images</a> of a background source if the lensing event is large. 
-                                    </p>
-                                    <p>
-                                        <br>
-                                        For the first scenario (the scenario I care about for this research), the lens can be as small as our Sun! In this case, as I mentioned,
-                                        we usually will only see an increase in brightness of the source object.
-                                    </p>
-                                    <p>
-                                        <br>
-                                        So why does microlensing help me in my search? As I mentioned earlier, the Hubble Space Telescope has observed Omega Centauri hundreds of times in the last ~20 years (<b>point #2!</b>). Within this data, 
-                                        I am searching for a microlensing event; that is, I am searching for an increase in brightness of a star, which could be caused by a black hole.
-                                    </p>
-                                    <br>
-                                <h1><u>Summary</u></h1>
-                                    <p>
-                                        <br>
-                                        To reiterate, I am searching for a microlensing event caused by a black hole in the largest globular cluster in the Galaxy, Omega Centauri, using Hubble Space Telescope observations from the past ~20 years.
-                                        If you want to learn more about this project, feel free to reach out to me!
-                                    </p>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                </section>
-        
-                <section class = "four" id="four">
-                    <h1> About Me </h1>
-                    <p> Here you can find out about a few of the things I like to do! </p>
-                    <div class = "cards">
-                        <div class = "card">
-                            <figure> <img src = "coffee.jpg" width="auto" height="auto"> </figure>
-                            <h2>Coffee</h2>
-                        </div>
-                        <div class = "card">
-                            <figure> <img src = "climbing.jpg"> </figure>
-                            <h2>Climbing</h2>
-                        </div>
-                        <div class = "card">
-                            <figure> <img src = "bike_two.jpg"> </figure>
-                            <h2>Biking</h2>
-                        </div>
-                        <div class = "card">
-                            <figure> <img src = "ski.jpg"> </figure>
-                            <h2>Skiing</h2>
-                        </div>
-                        <div class = "card">
-                            <figure> <img src = "naruto.png"> </figure>
-                            <h2>Anime</h2>
-                            <p>+ a bit of manga</p>
-                        </div>
-                        <div class = "card">
-                            <figure> <img src = "terraria.jpg"> </figure>
-                            <h2>Video Games</h2>
-                        </div>
-
-
-                    </div>
-                    
-
-                </section>
+    <div class="center-rectangle">
+        <div id="content-area">
+            <h1>Hey, I'm Zack Freeman</h1>
+            <img src="portrait.jpg" alt="Zack Freeman" class="profile-pic">
+            <div class="about-links">
+                <a href="https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank" class="pill-link">LinkedIn</a>
+                <a href="./running_cv.pdf" target="_blank" class="pill-link">CV</a>
+                <a href="https://github.com/zacktfreeman" target="_blank" class="pill-link">GitHub</a>
             </div>
+            
+            <p>
+                I'm currently a student at the University of Utah, studying Computing with a specialization in Artificial Intelligence.
+                <br><br>
+                I recently completed degrees in Computer Science and Physics at the University of Utah (B.S. in Computer Science, B.S. in Physics, May 2025). 
+                <br><br>
+                In computing, my interests are primarily in artificial intelligence and machine learning. For physics,
+                I enjoy learning about astrophysics; specifically, I am interested in black holes. 
+                <br><br>
+                Overall, I enjoy solving difficult problems and learning new things.
+            </p>
+        </div>
+        <div class="button-row">
+            <button id="btn-about" class="active" onclick="showContent('about')">About</button>
+            <button id="btn-education" onclick="showContent('education')">Education</button>
+            <button id="btn-research" onclick="showContent('research')">Research</button>
         </div>
     </div>
+    <script>
+        function showContent(section) {
+            const content = {
+                about: `
+                    <h1>Hey, I'm Zack Freeman</h1>
+                    <img src="portrait.jpg" alt="Zack Freeman" class="profile-pic">
+                    <div class="about-links">
+                        <a href="https://linkedin.com/" target="_blank" class="pill-link">LinkedIn</a>
+                        <a href="resume.pdf" target="_blank" class="pill-link">Resume</a>
+                        <a href="https://github.com/" target="_blank" class="pill-link">GitHub</a>
+                    </div>
+                    <p>
+                        I'm currently a student at the University of Utah, studying Computing with a specialization in Artificial Intelligence.
+                        <br><br>
+                        I recently completed degrees in Computer Science and Physics at the University of Utah (B.S. in Computer Science, B.S. in Physics, May 2025). 
+                        <br><br>
+                        In computing, my interests are primarily in artificial intelligence and machine learning. For physics,
+                        I enjoy learning about astrophysics; specifically, I am interested in black holes. 
+                        <br><br>
+                        Overall, I enjoy solving difficult problems and learning new things.
+                    </p>
+                `,
+                education: `
+                    <h1>Education</h1>
+                    <h2>University of Utah</h2>
+                    <h3><u>B.S. in Computer Science, May 2025</u></h3>
+                    <p>
+                        GPA: 3.9/4.0<br><br>
+                        Relevant coursework: Deep Learning, Machine Learning, Algorithms, Foundations of Data Analysis, Algorithms and Data Structures, Databases
+                    </p>
+                    <h3><u>B.S. in Physics, May 2025</u></h3>
+                    <p>
+                        GPA: 3.9/4.0<br><br>
+                        Relevant coursework: Intro to Cosmology, Extragalactic Astrophysics, Quantum Mechanics, Differential Equations, Linear Algebra, Complex Variables
+                    </p>
+                    <h2>Weber State University</h2>
+                    <h3><u>Associate of Science, May 2020</u></h3>
+                    <p>
+                        GPA: 3.9/4.0<br>
+                    </p>
+                `,
+                research: `
+                    <h1>Research</h1>
+                    <p>
+                        My research focuses on the detection of stellar mass black holes (black holes with a mass similar to our Sun) in a globular cluster named Omega Centauri.
+                        To find these black holes, I use a method of detection known as microlensing. Microlensing occurs when a massive object passes in front of a distant light source, 
+                        bending the light from the source and causing it to appear brighter for a short period of time. My work focuses on analyzing archival data from the Hubble Space
+                        Telescope to identify these microlensing events. By studying the light curves of these events, I can infer the presence of black holes in the cluster.
+                        <br><br>
+
+                        This project is advised by Dr. Anil Seth and Dr. Max Häberle.
+                    </p>
+                `,
+                links: `
+                    <h1>Links</h1>
+                    <p>
+                        <a href="https://github.com/" target="_blank">GitHub</a> |
+                        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+                    </p>
+                `
+            };
+            document.getElementById('content-area').innerHTML = content[section];
+
+            // Remove 'active' from all buttons
+            document.querySelectorAll('.button-row button').forEach(btn => btn.classList.remove('active'));
+            // Add 'active' to the current button
+            document.getElementById('btn-' + section).classList.add('active');
+        }
+    </script>
 </body>
+</html>
