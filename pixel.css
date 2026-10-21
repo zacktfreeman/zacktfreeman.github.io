@@ -73,6 +73,21 @@ html, body {
     background: var(--accent);
 }
 
+/* Sun/moon: label only shows on hover/focus so the sky stays clean */
+#sky-toggle {
+    position: absolute;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+#sky-toggle .obj-label { display: none; }
+
+#sky-toggle:hover .obj-label,
+#sky-toggle:focus-visible .obj-label { display: block; }
+
 @keyframes bob {
     50% { transform: translate(-50%, -4px); }
 }
@@ -107,7 +122,7 @@ html, body {
 }
 
 .hint {
-    margin: 10px 0 0;
+    margin: 6px 0 0;
     font-size: 20px;
     color: var(--box-edge);
 }
