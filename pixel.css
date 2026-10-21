@@ -1,0 +1,235 @@
+:root {
+    --ink: #0b0f2e;
+    --box-bg: #1b1a4a;
+    --box-edge: #f6d7a7;
+    --text: #f3ead8;
+    --accent: #ffb454;
+    --accent-dark: #b0532a;
+    --font-pixel: 'Press Start 2P', monospace;
+    --font-body: 'VT323', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+}
+
+/* ---------- Scene ---------- */
+#scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#scene-canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.scene-obj {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.obj-label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--text);
+    background: var(--ink);
+    padding: 6px 8px;
+    box-shadow: 0 0 0 3px var(--box-edge);
+    animation: bob 1s steps(2) infinite;
+}
+
+.obj-label::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: 3px;
+    border: 5px solid transparent;
+    border-top-color: var(--box-edge);
+}
+
+.scene-obj:hover .obj-label,
+.scene-obj:focus-visible .obj-label {
+    color: var(--ink);
+    background: var(--accent);
+}
+
+@keyframes bob {
+    50% { transform: translate(-50%, -4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .obj-label { animation: none; }
+}
+
+/* ---------- HUD ---------- */
+.hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    pointer-events: none;
+}
+
+.hud > * { pointer-events: auto; }
+
+.hud h1 {
+    margin: 0;
+    font-family: var(--font-pixel);
+    font-size: clamp(16px, 3vw, 28px);
+    color: var(--text);
+    text-shadow: 3px 3px 0 var(--accent-dark);
+}
+
+.hint {
+    margin: 10px 0 0;
+    font-size: 20px;
+    color: var(--box-edge);
+}
+
+.hud-links {
+    display: flex;
+    gap: 12px;
+}
+
+/* ---------- Pixel UI pieces ---------- */
+.pixel-btn {
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: var(--ink);
+    background: var(--accent);
+    text-decoration: none;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    box-shadow:
+        0 0 0 3px var(--ink),
+        inset -3px -3px 0 var(--accent-dark);
+}
+
+.pixel-btn:hover { background: var(--box-edge); }
+.pixel-btn:active { box-shadow: 0 0 0 3px var(--ink), inset 3px 3px 0 var(--accent-dark); }
+.pixel-btn.active { background: var(--box-edge); }
+
+.pixel-box {
+    background: var(--box-bg);
+    color: var(--text);
+    border: 4px solid var(--ink);
+    box-shadow:
+        0 0 0 4px var(--box-edge),
+        0 0 0 8px var(--ink),
+        12px 12px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.pixel-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 12px auto;
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    line-height: 1.8;
+    color: var(--box-edge);
+    border: 3px dashed var(--box-edge);
+    background:
+        repeating-conic-gradient(#25245c 0 25%, #1b1a4a 0 50%) 0 0 / 16px 16px;
+}
+
+.pixel-placeholder.portrait { width: 160px; height: 160px; }
+.pixel-placeholder.wide { width: 100%; max-width: 360px; height: 160px; }
+
+/* ---------- Dialog ---------- */
+#dialog {
+    width: min(680px, calc(100vw - 48px));
+    max-height: calc(100vh - 80px);
+    padding: 24px;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+}
+
+#dialog[open] { display: flex; }
+
+#dialog::backdrop { background: rgba(11, 15, 46, 0.55); }
+
+#dialog-content {
+    overflow-y: auto;
+    font-size: 22px;
+    line-height: 1.2;
+    padding-right: 8px;
+}
+
+#dialog-content h2 {
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--accent);
+    margin: 0 40px 12px 0;
+}
+
+#dialog-content h3 {
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    color: var(--box-edge);
+    margin: 20px 0 8px;
+}
+
+#dialog-content h4 {
+    font-size: 22px;
+    font-weight: normal;
+    color: var(--accent);
+    margin: 12px 0 4px;
+}
+
+#dialog-content p { margin: 0 0 12px; }
+
+.dialog-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.dialog-close:hover { color: var(--accent); }
+
+.dialog-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    padding-top: 16px;
+    margin-top: 8px;
+    border-top: 3px solid var(--box-edge);
+}
