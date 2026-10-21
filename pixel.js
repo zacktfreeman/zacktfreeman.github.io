@@ -98,6 +98,8 @@ const MEADOW = ['#22392c', '#2a4a33', '#33593a', '#3d6b3a', '#4b7e40'];
 // River reflects the dusk near the horizon, deep blue up close
 const WATER = ['#7a5f8e', '#4d5f9e', '#3a5f9a', '#2f5590', '#264a80'];
 const GRAVEL = ['#4f4b46', '#5e5a53', '#6e6a62', '#7f7a70'];
+const PINE = { light: '#3f7a4a', dark: '#2a5236', edge: '#17281d', trunk: '#4a3020' };
+const FLOWERS = ['#e05a5a', '#ffd25a', '#b07ad9', '#f0f0f0'];
 const ROCK = { base: '#6f6c78', light: '#a3a0ad', dark: '#45434d' };
 const BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]];
 
@@ -133,6 +135,30 @@ function drawRock(ctx, x, y, s) {
     ctx.fillStyle = ROCK.dark;
     ctx.fillRect(x, y + s - 1, s, 1);
     ctx.fillRect(x + s - 1, y, 1, s);
+}
+
+// Tiered pine: lit left side, shaded right side, shadow under each tier; base is the ground row
+function drawPine(ctx, cx, base, h) {
+    const trunkH = Math.max(1, Math.round(h * 0.15));
+    const canopy = h - trunkH;
+    const tierLen = Math.ceil(canopy / (h < 9 ? 2 : 3));
+    ctx.fillStyle = PINE.trunk;
+    ctx.fillRect(cx, base - trunkH, 1, trunkH);
+    for (let r = 0; r < canopy; r++) {
+        const tier = Math.floor(r / tierLen);
+        const k = r - tier * tierLen;
+        const half = tier + Math.round(k * 0.75);
+        const underside = k === tierLen - 1 || r === canopy - 1;
+        const y = base - h + r;
+        ctx.fillStyle = underside ? PINE.dark : PINE.light;
+        ctx.fillRect(cx - half, y, half + 1, 1);
+        ctx.fillStyle = underside ? PINE.edge : PINE.dark;
+        ctx.fillRect(cx + 1, y, half, 1);
+        if (half > 0) {
+            ctx.fillStyle = underside ? PINE.edge : PINE.dark;
+            ctx.fillRect(cx - half, y, 1, 1);
+        }
+    }
 }
 
 // Pixel-stepped quadratic curve (used for the fishing line and rod)
@@ -266,15 +292,86 @@ function buildScene() {
         if (depth > 0.6) fctx.fillRect(x, y - 1, 1, 1);
     }
 
-    // River winding from the mountains toward the viewer (widens with depth)
+    // River course: winds from the mountains toward the viewer (widens with depth)
     const river = [];
     for (let y = horizon; y < H; y++) {
         const depth = (y - horizon) / landH;
         const cx = W * (0.5 - 0.18 * depth + 0.06 * Math.sin(depth * 6 + 1));
         const half = 0.5 + depth * Math.max(W * 0.07, 10);
         const bank = Math.round(1 + depth * Math.max(W * 0.02, 3));
-        const x0 = Math.round(cx - half);
-        const x1 = Math.round(cx + half);
+        river.push({ y, depth, cx, half, bank, x0: Math.round(cx - half), x1: Math.round(cx + half) });
+    }
+
+    // Scene objects stand on the meadow at different depths
+    const place = (sprite, cx, depth) => {
+        const w = sprite[0].length, h = sprite.length;
+        const foot = horizon + Math.round(depth * landH);
+        return { sprite, x: Math.round(W * cx - w / 2), y: foot - h, w, h, foot };
+    };
+    const objects = {
+        about: place(TENT, 0.17, 0.55),
+        education: place(CABIN, 0.66, 0.35),
+        research: place(TELESCOPE, 0.86, 0.6),
+    };
+
+    // ---- Trail: left edge -> past the tent -> bridge -> cabin door -> right edge ----
+    const trng = mulberry32(7);
+    const bridgeRow = river[Math.round(0.48 * (river.length - 1))];
+    const tent = objects.about, cabin = objects.education;
+    const trailPoints = [
+        [-4, tent.foot + landH * 0.16],
+        [tent.x + tent.w / 2, tent.foot + landH * 0.1],
+        [bridgeRow.x0 - bridgeRow.bank - 5, bridgeRow.y],
+        [bridgeRow.x1 + bridgeRow.bank + 5, bridgeRow.y],
+        [cabin.x + 13, cabin.foot + 1], // the cabin door
+        [cabin.x + cabin.w + 6, cabin.foot + landH * 0.12],
+        [W + 4, horizon + landH * 0.5],
+    ];
+    // Dense samples along a Catmull-Rom curve through the points
+    const trail = [];
+    for (let s = 0; s < trailPoints.length - 1; s++) {
+        const p0 = trailPoints[Math.max(s - 1, 0)], p1 = trailPoints[s];
+        const p2 = trailPoints[s + 1], p3 = trailPoints[Math.min(s + 2, trailPoints.length - 1)];
+        const n = Math.ceil(Math.hypot(p2[0] - p1[0], p2[1] - p1[1]) * 2);
+        for (let i = 0; i < n; i++) {
+            const t = i / n, t2 = t * t, t3 = t2 * t;
+            const cr = k => 0.5 * (2 * p1[k] + (p2[k] - p0[k]) * t
+                + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 + (3 * p1[k] - p0[k] - 3 * p2[k] + p3[k]) * t3);
+            trail.push({ x: cr(0), y: cr(1) });
+        }
+    }
+    // Mark the trail as a mask (2 = dirt, 1 = edge), wider up close
+    const trailMask = new Uint8Array(W * H);
+    trail.forEach(pt => {
+        const depth = (pt.y - horizon) / landH;
+        pt.w = 2 + Math.round(depth * Math.max(5, W * 0.025));
+        pt.th = Math.max(1, Math.round(pt.w * 0.35));
+        const x0 = Math.round(pt.x - pt.w / 2), y0 = Math.round(pt.y);
+        for (let y = y0; y < y0 + pt.th; y++) {
+            for (let x = x0; x < x0 + pt.w; x++) {
+                if (x >= 0 && x < W && y > horizon && y < H) trailMask[y * W + x] = 2;
+            }
+        }
+    });
+    for (let y = horizon + 1; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+            const p = y * W + x;
+            if (trailMask[p]) continue;
+            if ((x > 0 && trailMask[p - 1] === 2) || (x < W - 1 && trailMask[p + 1] === 2)
+                || trailMask[p - W] === 2 || (y < H - 1 && trailMask[p + W] === 2)) {
+                trailMask[p] = 1;
+            }
+        }
+    }
+    for (let p = 0; p < W * H; p++) {
+        if (!trailMask[p]) continue;
+        const r = trng();
+        fctx.fillStyle = trailMask[p] === 1 ? '#5e4630' : r < 0.12 ? '#a0805a' : r < 0.22 ? '#6e5238' : '#86664a';
+        fctx.fillRect(p % W, Math.floor(p / W), 1, 1);
+    }
+
+    // Draw the river over the meadow and trail
+    for (const { y, depth, cx, half, bank, x0, x1 } of river) {
         // Gravel banks
         for (let x = x0 - bank; x <= x1 + bank; x++) {
             fctx.fillStyle = GRAVEL[Math.floor(rng() * GRAVEL.length)];
@@ -290,7 +387,6 @@ function buildScene() {
         fctx.fillStyle = '#2a3a4a';
         fctx.fillRect(x0 - 1, y, 1, 1);
         fctx.fillRect(x1 + 1, y, 1, 1);
-        river.push({ y, depth, cx, half, bank, x0, x1 });
     }
 
     // Rocks along the banks (bigger up close)
@@ -308,15 +404,38 @@ function buildScene() {
         const row = river[Math.floor((0.3 + rng() * 0.65) * river.length)];
         const s = Math.max(2, Math.round(row.depth * 4));
         const x = Math.round(row.cx + (-0.6 + rng() * 0.7) * row.half - s / 2);
+        if (Math.abs(row.y - bridgeRow.y) < s + 4) continue; // keep the bridge clear
         drawRock(fctx, x, row.y - s + 1, s);
         boulders.push({ x, y: row.y + 1, s });
     }
 
+    // Wooden bridge where the trail crosses: plank deck, back rail with posts, shadow on the water
+    const deckH = trail.find(pt => pt.x >= bridgeRow.cx).th + 2;
+    const bridge = {
+        x0: bridgeRow.x0 - bridgeRow.bank - 2,
+        x1: bridgeRow.x1 + bridgeRow.bank + 2,
+        deckTop: bridgeRow.y - 1,
+    };
+    bridge.y0 = bridge.deckTop - 3;          // top of the railing
+    bridge.y1 = bridge.deckTop + deckH;      // shadow row
+    fctx.fillStyle = '#1a2a40';
+    fctx.fillRect(bridgeRow.x0, bridge.y1, bridgeRow.x1 - bridgeRow.x0 + 1, 1);
+    for (let x = bridge.x0; x <= bridge.x1; x++) {
+        fctx.fillStyle = x % 2 ? '#8b5a34' : '#7a4c2c';
+        fctx.fillRect(x, bridge.deckTop, 1, deckH - 1);
+    }
+    fctx.fillStyle = '#4a2f1c';
+    fctx.fillRect(bridge.x0, bridge.deckTop + deckH - 1, bridge.x1 - bridge.x0 + 1, 1);
+    fctx.fillRect(bridge.x0, bridge.y0, bridge.x1 - bridge.x0 + 1, 1);
+    for (let x = bridge.x0; x <= bridge.x1; x += 4) fctx.fillRect(x, bridge.y0, 1, 3);
+    fctx.fillRect(bridge.x1, bridge.y0, 1, 3);
+
     // Shimmer spots and downstream-flowing ripples on the water
+    const onBridge = y => y >= bridge.y0 - 1 && y <= bridge.y1;
     const shimmer = [];
     for (let i = 0; i < landH * 0.8; i++) {
         const row = river[Math.floor(rng() * river.length)];
-        if (row.x1 - row.x0 < 2) continue;
+        if (row.x1 - row.x0 < 2 || onBridge(row.y)) continue;
         shimmer.push({
             x: row.x0 + 1 + Math.floor(rng() * (row.x1 - row.x0 - 1)),
             y: row.y,
@@ -328,6 +447,15 @@ function buildScene() {
         ripples.push({ f: rng() * 1.4 - 0.7, t: rng() });
     }
 
+    // Jumping trout, between the bridge and the fisher (left of the fly's drift line)
+    const jr = river[Math.round(0.62 * (river.length - 1))];
+    const fish = {
+        x0: Math.round(jr.cx - jr.half * 0.5),
+        y: jr.y,
+        span: Math.round(Math.min(8 + jr.depth * 5, jr.half * 1.1)),
+        h: 5 + Math.round(jr.depth * 5),
+    };
+
     // Fly fisher standing waist-deep near the right bank
     const fisherRow = Math.round(0.82 * (river.length - 1));
     const fr = river[fisherRow];
@@ -337,17 +465,6 @@ function buildScene() {
         row: fisherRow,
     };
 
-    // Scene objects stand on the meadow at different depths
-    const place = (sprite, cx, depth) => {
-        const w = sprite[0].length, h = sprite.length;
-        const foot = horizon + Math.round(depth * landH);
-        return { sprite, x: Math.round(W * cx - w / 2), y: foot - h, w, h };
-    };
-    const objects = {
-        about: place(TENT, 0.17, 0.55),
-        education: place(CABIN, 0.66, 0.35),
-        research: place(TELESCOPE, 0.86, 0.6),
-    };
     Object.values(objects).forEach(o => {
         fctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; // ground shadow
         fctx.fillRect(o.x, o.y + o.h - 1, o.w, 2);
@@ -358,6 +475,125 @@ function buildScene() {
         x: objects.about.x - FIRE_FRAMES[0][0].length - 2,
         y: objects.about.y + objects.about.h - FIRE_FRAMES[0].length,
     };
+
+    // ---- Pine trees and wildflowers in the open meadow ----
+    // Keep clear of the objects (and their labels), the campfire, and the fisher's casting area
+    const reserved = [
+        ...Object.values(objects).map(o => ({ x0: o.x - 3, y0: o.y - 10, x1: o.x + o.w + 2, y1: o.y + o.h + 2 })),
+        { x0: fire.x - 3, y0: fire.y - 4, x1: objects.about.x, y1: fire.y + FIRE_FRAMES[0].length + 2 },
+        { x0: fisher.x - 18, y0: fisher.y - 14, x1: fisher.x + FISHER[0].length + 14, y1: fisher.y + FISHER.length + 2 },
+    ];
+    const blocked = (x0, y0, x1, y1) => {
+        if (reserved.some(r => x1 >= r.x0 && x0 <= r.x1 && y1 >= r.y0 && y0 <= r.y1)) return true;
+        for (let y = Math.max(y0, horizon); y <= Math.min(y1, H - 1); y++) {
+            const r = river[y - horizon];
+            if (x1 >= r.x0 - r.bank - 2 && x0 <= r.x1 + r.bank + 2) return true;
+            for (let x = Math.max(x0, 0); x <= Math.min(x1, W - 1); x++) {
+                if (trailMask[y * W + x]) return true;
+            }
+        }
+        return false;
+    };
+
+    // Lamp posts alternating sides of the trail; their lights are drawn in render
+    const lamps = [];
+    const spacing = Math.max(22, W / 6);
+    let dist = spacing / 2, side = 1;
+    for (let i = 1; i < trail.length; i++) {
+        const pt = trail[i];
+        dist += Math.hypot(pt.x - trail[i - 1].x, pt.y - trail[i - 1].y);
+        if (dist < spacing) continue;
+        const depth = (pt.y - horizon) / landH;
+        const x = Math.round(pt.x);
+        const h = 4 + Math.round(depth * 4);
+        if (x < 2 || x > W - 3) continue;
+        // Find a ground spot just off the trail, preferring the current side but trying the other too.
+        // The spot must be off the trail/river; the full post must stay clear of objects and labels.
+        const findFoot = s => {
+            for (let k = 0; k < 4; k++) {
+                const foot = s > 0 ? Math.round(pt.y) - 2 - k : Math.round(pt.y) + pt.th + 2 + k;
+                if (foot >= H - 1) return null;
+                const hitsReserved = reserved.some(r => x + 1 >= r.x0 && x - 1 <= r.x1 && foot >= r.y0 && foot - h - 4 <= r.y1);
+                if (!hitsReserved && !blocked(x - 1, foot - 1, x + 1, foot)) return foot;
+            }
+            return null;
+        };
+        let foot = findFoot(side);
+        if (foot === null) foot = findFoot(-side);
+        else side = -side;
+        if (foot === null) continue;
+        dist = 0;
+        // Tiki torch: banded bamboo pole with a woven cup on top (flame is drawn in render)
+        for (let y = foot - h + 2; y <= foot; y++) {
+            fctx.fillStyle = y % 3 === 0 ? '#8a6a3a' : '#c9a66b';
+            fctx.fillRect(x, y, 1, 1);
+        }
+        fctx.fillStyle = '#8a5a30';
+        fctx.fillRect(x - 1, foot - h, 3, 1);
+        fctx.fillStyle = '#5a3a22';
+        fctx.fillRect(x - 1, foot - h + 1, 3, 1);
+        lamps.push({ x, foot, headY: foot - h, phase: lamps.length });
+        reserved.push({ x0: x - 2, y0: foot - h - 4, x1: x + 2, y1: foot + 1 });
+    }
+
+    // Trees: smaller toward the horizon, often in small groves
+    const trees = [];
+    for (let tries = 0; trees.length < Math.round(W / 14) && tries < 500; tries++) {
+        const near = trees.length && rng() < 0.4 ? trees[Math.floor(rng() * trees.length)] : null;
+        const depth = near ? (near.base - horizon) / landH + (rng() - 0.5) * 0.1 : 0.03 + rng() * 0.97;
+        if (depth < 0.02 || depth > 1) continue;
+        const base = horizon + Math.round(depth * (landH - 1));
+        const h = Math.round(6 + depth * Math.min(14, landH * 0.3) + rng() * 3);
+        const half = Math.ceil(h * 0.45);
+        const cx = near ? near.cx + Math.round((rng() < 0.5 ? -1 : 1) * (half + 1 + rng() * 3)) : Math.floor(rng() * W);
+        if (blocked(cx - half - 1, base - h, cx + half + 1, base + 1)) continue;
+        trees.push({ cx, base, h });
+    }
+    // Extra woods on the left, behind the trail and tent
+    const tentRight = objects.about.x + objects.about.w + 6;
+    const tentDepth = (objects.about.foot - horizon) / landH;
+    const leftGoal = trees.length + Math.round(W / 30) + 4;
+    for (let tries = 0; trees.length < leftGoal && tries < 600; tries++) {
+        const depth = 0.03 + rng() * (tentDepth - 0.05);
+        const base = horizon + Math.round(depth * (landH - 1));
+        const h = Math.round(6 + depth * Math.min(14, landH * 0.3) + rng() * 3);
+        const half = Math.ceil(h * 0.45);
+        const cx = Math.floor(rng() * tentRight);
+        if (blocked(cx - half - 1, base - h, cx + half + 1, base + 1)) continue;
+        trees.push({ cx, base, h });
+        reserved.push({ x0: cx - 1, y0: base - 1, x1: cx + 1, y1: base + 1 }); // avoid stacking trunks
+    }
+    trees.sort((p, q) => p.base - q.base).forEach(t => {
+        drawPine(fctx, t.cx, t.base, t.h);
+        const half = Math.ceil(t.h * 0.45);
+        reserved.push({ x0: t.cx - half, y0: t.base - t.h, x1: t.cx + half, y1: t.base + 1 });
+    });
+
+    // Flowers: small same-color patches, bigger blooms up close
+    for (let i = 0; i < W * 0.15; i++) {
+        const depth = Math.sqrt(rng());
+        const cy = horizon + 2 + Math.round(depth * (landH - 3));
+        const cx = rng() * W;
+        const color = FLOWERS[Math.floor(rng() * FLOWERS.length)];
+        const n = 2 + Math.floor(rng() * 4);
+        for (let j = 0; j < n; j++) {
+            const x = Math.round(cx + (rng() - 0.5) * 7);
+            const y = Math.round(cy + (rng() - 0.5) * 3);
+            if (y >= H || blocked(x - 1, y - 3, x + 1, y)) continue;
+            fctx.fillStyle = '#2f5a3a';
+            fctx.fillRect(x, y, 1, 1);
+            fctx.fillStyle = color;
+            if (depth > 0.7) {
+                fctx.fillRect(x - 1, y - 2, 3, 1);
+                fctx.fillRect(x, y - 3, 1, 3);
+                fctx.fillStyle = '#ffd25a';
+                if (color === '#ffd25a') fctx.fillStyle = '#b0532a';
+                fctx.fillRect(x, y - 2, 1, 1);
+            } else {
+                fctx.fillRect(x, y - 1, 1, 1);
+            }
+        }
+    }
 
     // Pixels that get the night tint: everything in the foreground except lit windows/lantern
     const fgAlpha = fctx.getImageData(0, 0, W, H).data;
@@ -372,6 +608,8 @@ function buildScene() {
 
     const sun = { x: Math.round(W * 0.3), r: Math.max(4, Math.round(H * 0.04)) };
     const moon = { x: Math.round(W * 0.78), r: Math.max(3, Math.round(H * 0.03)) };
+    // Black hole: rs is the shadow radius; with its rings it ends up slightly smaller than the sun
+    const blackHole = { x: Math.round(W * 0.55), y: Math.round(H * 0.2), rs: Math.max(2, sun.r - 4) };
 
     // Position the clickable buttons over the sprites
     document.querySelectorAll('.scene-obj').forEach(btn => {
@@ -386,8 +624,105 @@ function buildScene() {
 
     scene = {
         W, H, px, horizon, sky, skyDay, skyNight, skyLevel: -1, fg, tintable,
-        stars, sun, moon, shimmer, ripples, boulders, river, fisher, fire,
+        stars, sun, moon, blackHole, shimmer, ripples, boulders, river, fisher, fish, fire, lamps, onBridge,
     };
+}
+
+// Trout jump: every FISH_CYCLE frames it leaps for FISH_JUMP frames, with splashes on exit and entry
+const FISH_CYCLE = 72;
+const FISH_JUMP = 10;
+const FISH_START = 20; // offset so it doesn't sync with the fisher's cast
+
+function drawSplash(ctx, x, y, step) {
+    ctx.fillStyle = '#dfe9f2';
+    const r = step + 1;
+    ctx.fillRect(x - r, y, 1, 1);
+    ctx.fillRect(x + r, y, 1, 1);
+    if (step < 2) {
+        ctx.fillRect(x - step, y - r, 1, 1); // droplets
+        ctx.fillRect(x + step, y - r - 1, 1, 1);
+    }
+}
+
+function drawFish(ctx, { fish }) {
+    const k = (frame - FISH_START + FISH_CYCLE * 100) % FISH_CYCLE;
+    const xEnd = fish.x0 + fish.span;
+    if (k < 3) drawSplash(ctx, fish.x0, fish.y, k);                       // exit splash
+    if (k >= FISH_JUMP && k < FISH_JUMP + 3) drawSplash(ctx, xEnd, fish.y, k - FISH_JUMP); // entry splash
+    if (k >= FISH_JUMP) return;
+
+    // Parabolic arc; the body points along the direction of travel
+    const t = (k + 0.5) / FISH_JUMP;
+    const cx = fish.x0 + fish.span * t;
+    const cy = fish.y - 4 * fish.h * t * (1 - t);
+    const ang = Math.atan2(-4 * fish.h * (1 - 2 * t), fish.span);
+    const dx = Math.cos(ang), dy = Math.sin(ang);
+    // Head, pink side stripe, tail (7 px long), with an olive back and silver belly
+    const body = ['#d8dde5', '#c0c8d0', '#e08a9a', '#e08a9a', '#e08a9a', '#8a9ab0', '#6a7a90'];
+    const px = Math.round(-dy), py = Math.round(dx); // perpendicular, toward the belly
+    body.forEach((color, i) => {
+        const x = Math.round(cx + dx * (3 - i)), y = Math.round(cy + dy * (3 - i));
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, 1, 1);
+        if (i >= 1 && i <= 4) {
+            ctx.fillStyle = '#c0c8d0'; // belly
+            ctx.fillRect(x + px, y + py, 1, 1);
+        }
+        if (i >= 2 && i <= 5) {
+            ctx.fillStyle = '#5e7a5a'; // back
+            ctx.fillRect(x - px, y - py, 1, 1);
+        }
+        if (i === 6) {
+            ctx.fillStyle = '#6a7a90'; // forked tail fin
+            ctx.fillRect(x - px, y - py, 1, 1);
+            ctx.fillRect(x + px, y + py, 1, 1);
+            ctx.fillRect(x - 2 * px - Math.round(dx), y - 2 * py - Math.round(dy), 1, 1);
+            ctx.fillRect(x + 2 * px - Math.round(dx), y + 2 * py - Math.round(dy), 1, 1);
+        }
+    });
+}
+
+// Two flicker frames of torch flame, as [dx, dy, color] relative to the cup top
+const TORCH_FLAMES = [
+    [[0, -3, '#d9452b'], [-1, -2, '#ff9a3c'], [0, -2, '#ffd25a'], [1, -2, '#d9452b'],
+        [-1, -1, '#ff9a3c'], [0, -1, '#ffd25a'], [1, -1, '#ff9a3c']],
+    [[1, -3, '#d9452b'], [-1, -2, '#d9452b'], [0, -2, '#ff9a3c'], [1, -2, '#ffd25a'],
+        [-1, -1, '#ff9a3c'], [0, -1, '#ffd25a'], [1, -1, '#ff9a3c']],
+];
+
+// Torches light as night falls: a small flame catches, grows, and casts a warm glow
+function drawLamps(ctx) {
+    const lit = Math.max(0, Math.min((night - 0.3) / 0.3, 1));
+    const slow = frame >> 1;
+    scene.lamps.forEach(l => {
+        if (lit < 0.1) return;
+        const cy = l.headY - 2;
+        ctx.fillStyle = '#ffa64d';
+        // Faint outer glow, then a brighter inner halo around the flame
+        ctx.globalAlpha = lit * 0.12;
+        ctx.fillRect(l.x - 4, cy - 2, 9, 5);
+        ctx.fillRect(l.x - 2, cy - 4, 5, 9);
+        ctx.globalAlpha = lit * 0.22;
+        ctx.fillRect(l.x - 2, cy - 1, 5, 3);
+        ctx.fillRect(l.x - 1, cy - 2, 3, 5);
+        ctx.globalAlpha = 1;
+        // Flame: just the base row while catching, full flickering flame once lit
+        TORCH_FLAMES[(slow + l.phase) % 2].forEach(([dx, dy, c]) => {
+            if (lit < 0.5 && dy < -1) return;
+            ctx.fillStyle = c;
+            ctx.fillRect(l.x + dx, l.headY + dy, 1, 1);
+        });
+        // Oval pool of light on the ground: soft outer ring, brighter center
+        ctx.fillStyle = '#ffb060';
+        ctx.globalAlpha = lit * 0.14;
+        ctx.fillRect(l.x - 2, l.foot - 2, 5, 1);
+        ctx.fillRect(l.x - 4, l.foot - 1, 9, 1);
+        ctx.fillRect(l.x - 5, l.foot, 11, 1);
+        ctx.fillRect(l.x - 4, l.foot + 1, 9, 1);
+        ctx.fillRect(l.x - 2, l.foot + 2, 5, 1);
+        ctx.fillRect(l.x - 2, l.foot - 1, 5, 3);
+        ctx.globalAlpha = 1;
+    });
 }
 
 // ---------- Day/night ----------
@@ -425,6 +760,31 @@ function drawSunAndMoon(ctx, p) {
     ctx.fillRect(moon.x - 1, moonY - 1, 1, 1);
     ctx.fillRect(moon.x + 1, moonY + 1, 2, 1);
     ctx.fillRect(moon.x - Math.ceil(moon.r / 2), moonY + Math.ceil(moon.r / 2) - 1, 1, 1);
+}
+
+// Black hole: glow ring, photon ring, shadow, and an accretion disk crossing in front.
+// The left side of the disk is brighter (approaching side), and a hot spot orbits along it.
+function drawBlackHole(ctx) {
+    const { x, y, rs } = scene.blackHole;
+    drawDisc(ctx, x, y, rs + 2, '#d9782f');
+    drawDisc(ctx, x, y, rs + 1, '#f5d29a');
+    drawDisc(ctx, x, y, rs, '#000000');
+
+    const dW = rs + 3;
+    const disk = ['#f5d29a', '#f0b060', '#e08c3a', '#c96a2a', '#a83a22'];
+    for (let dx = -dW; dx <= dW; dx++) {
+        // Brightest just left of center, fading toward the edges and dimmer on the right
+        const fade = Math.abs(dx) / dW + (dx > 0 ? 0.25 : 0);
+        ctx.fillStyle = disk[Math.min(disk.length - 1, Math.floor(fade * disk.length))];
+        ctx.fillRect(x + dx, y, 1, 1);
+        if (rs >= 3 && Math.abs(dx) < dW - 1) {
+            ctx.fillStyle = disk[Math.min(disk.length - 1, Math.floor(fade * disk.length) + 1)];
+            ctx.fillRect(x + dx, y + 1, 1, 1);
+        }
+    }
+    const spot = dW - (frame % (2 * dW + 1)); // orbits right to left across the front
+    ctx.fillStyle = '#fff0d0';
+    ctx.fillRect(x + spot, y, 1, 1);
 }
 
 // Smoothly shift foreground pixels toward moonlit blue by amount (0..1)
@@ -538,6 +898,7 @@ function render() {
         ctx.fillRect(s.x, s.y, 1, 1);
     });
     drawSunAndMoon(ctx, night);
+    drawBlackHole(ctx);
     ctx.drawImage(fg, 0, 0);
 
     ctx.fillStyle = '#9fd3ff';
@@ -547,7 +908,7 @@ function render() {
     ctx.fillStyle = '#6a93c9';
     ripples.forEach(r => {
         const row = river[Math.floor(r.t * (river.length - 1))];
-        if (row.depth < 0.2) return;
+        if (row.depth < 0.2 || scene.onBridge(row.y)) return;
         const len = 1 + Math.round(row.depth * 3);
         ctx.fillRect(Math.round(row.cx + r.f * row.half - len / 2), row.y, len, 1);
     });
@@ -559,8 +920,10 @@ function render() {
         }
     });
 
+    drawFish(ctx, scene);
     drawFisher(ctx, scene);
     applyNightTint(night);
+    drawLamps(ctx);
     drawSprite(ctx, FIRE_FRAMES[slow % 2], fire.x, fire.y); // fire stays lit
     placeSkyToggle();
 }
