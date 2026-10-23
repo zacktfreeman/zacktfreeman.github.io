@@ -154,6 +154,29 @@ html, body {
     color: var(--box-edge);
 }
 
+/* Phone-only section menu, stacked like an RPG command list */
+.menu-card {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 18px;
+}
+
+.menu-card .pixel-btn { justify-content: center; }
+
+/* On phones the scene is too small to aim at, so swap the floating labels and
+   hints for the menu box. The objects themselves stay tappable. */
+@media (max-width: 600px) {
+    .scene-obj .obj-label,
+    .hint-card { display: none; }
+
+    .menu-card { display: flex; }
+}
+
 /* ---------- Pixel UI pieces ---------- */
 .pixel-btn {
     font-family: var(--font-pixel);
