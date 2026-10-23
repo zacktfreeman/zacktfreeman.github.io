@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zack Freeman: M.S. Computing (AI) student at the University of Utah, working on machine learning and black hole microlensing in Omega Centauri.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%230b0f2e'/%3E%3Crect x='6' y='2' width='4' height='1' fill='%23ffb454'/%3E%3Crect x='5' y='3' width='6' height='1' fill='%23ffb454'/%3E%3Crect x='4' y='4' width='8' height='1' fill='%23ffb454'/%3E%3Crect x='4' y='5' width='8' height='1' fill='%23ffb454'/%3E%3Crect x='5' y='6' width='6' height='1' fill='%23ffb454'/%3E%3Crect x='6' y='7' width='4' height='1' fill='%23ffb454'/%3E%3Crect x='0' y='9' width='16' height='1' fill='%23b0532a'/%3E%3Crect x='0' y='11' width='16' height='1' fill='%23b0532a'/%3E%3Crect x='2' y='13' width='12' height='1' fill='%23b0532a'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
     <link rel="stylesheet" href="./pixel.css">
     <title>Zack Freeman</title>
@@ -18,17 +20,27 @@
     </div>
 
     <header class="hud">
-        <div class="hud-title pixel-box">
+        <div class="hud-card pixel-box">
             <h1>Zack Freeman</h1>
-            <p class="hint">&gt; click the tent, cabin, or telescope</p>
-            <p class="hint" id="sky-hint">&gt; click the sun to watch it set</p>
+            <p class="subtitle">M.S. Computing (AI) &middot; University of Utah</p>
+            <nav class="hud-links">
+                <a href="https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank" class="pixel-btn">
+                    <svg class="btn-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 1h4v1h-4zM3 2h1v1h-1zM8 2h1v1h-1zM0 3h12v1h-12zM0 4h1v1h-1zM11 4h1v1h-1zM0 5h1v1h-1zM11 5h1v1h-1zM0 6h5v1h-5zM7 6h5v1h-5zM0 7h1v1h-1zM5 7h2v1h-2zM11 7h1v1h-1zM0 8h1v1h-1zM11 8h1v1h-1zM0 9h1v1h-1zM11 9h1v1h-1zM0 10h12v1h-12z"/></svg>LinkedIn
+                </a>
+                <a href="./running_cv.pdf" target="_blank" class="pixel-btn">
+                    <svg class="btn-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 0h6v1h-6zM1 1h1v1h-1zM6 1h2v1h-2zM1 2h1v1h-1zM3 2h2v1h-2zM6 2h1v1h-1zM8 2h1v1h-1zM1 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM1 4h1v1h-1zM6 4h5v1h-5zM1 5h1v1h-1zM10 5h1v1h-1zM1 6h1v1h-1zM3 6h6v1h-6zM10 6h1v1h-1zM1 7h1v1h-1zM10 7h1v1h-1zM1 8h1v1h-1zM3 8h6v1h-6zM10 8h1v1h-1zM1 9h1v1h-1zM10 9h1v1h-1zM1 10h1v1h-1zM10 10h1v1h-1zM1 11h10v1h-10z"/></svg>CV
+                </a>
+                <a href="https://github.com/zacktfreeman" target="_blank" class="pixel-btn">
+                    <svg class="btn-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 0h1v1h-1zM10 0h1v1h-1zM1 1h2v1h-2zM9 1h2v1h-2zM1 2h3v1h-3zM8 2h3v1h-3zM1 3h10v1h-10zM0 4h12v1h-12zM0 5h2v1h-2zM4 5h4v1h-4zM10 5h2v1h-2zM0 6h2v1h-2zM4 6h4v1h-4zM10 6h2v1h-2zM0 7h12v1h-12zM0 8h5v1h-5zM7 8h5v1h-5zM0 9h12v1h-12zM1 10h10v1h-10zM2 11h8v1h-8z"/></svg>GitHub
+                </a>
+            </nav>
         </div>
-        <nav class="hud-links pixel-box">
-            <a href="https://www.linkedin.com/in/zack-freeman-9b96ba206/" target="_blank" class="pixel-btn">LinkedIn</a>
-            <a href="./running_cv.pdf" target="_blank" class="pixel-btn">CV</a>
-            <a href="https://github.com/zacktfreeman" target="_blank" class="pixel-btn">GitHub</a>
-        </nav>
     </header>
+
+    <div class="hint-card pixel-box">
+        <p class="hint">&gt; click the tent, cabin, or telescope</p>
+        <p class="hint" id="sky-hint">&gt; click the sun to watch it set</p>
+    </div>
 
     <dialog id="dialog" class="pixel-box">
         <button class="dialog-close" aria-label="Close">X</button>
@@ -43,7 +55,7 @@
     <!-- Section content (copied from index.html) -->
     <template id="tpl-about">
         <h2>Hey, I'm Zack Freeman</h2>
-        <div class="pixel-placeholder portrait">portrait<br>(pixel art TBD)</div>
+        <img src="./portrait.jpg" alt="Zack Freeman" class="dialog-img portrait">
         <p>
             I'm currently a graduate student at the University of Utah, studying Computing with a specialization in Artificial Intelligence.
         </p>
@@ -83,7 +95,7 @@
 
     <template id="tpl-research">
         <h2>Research</h2>
-        <div class="pixel-placeholder wide">omega centauri<br>(pixel art TBD)</div>
+        <img src="./omegacen.jpg" alt="Omega Centauri" class="dialog-img wide">
         <p>
             My research focuses on the detection of stellar mass black holes (black holes with a mass similar to our Sun) in a globular cluster named Omega Centauri.
             To find these black holes, I use a method of detection known as microlensing. Microlensing occurs when a massive object passes in front of a distant light source,
