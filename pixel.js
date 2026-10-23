@@ -958,8 +958,11 @@ document.querySelectorAll('[data-section]').forEach(btn => {
     btn.addEventListener('click', () => showContent(btn.dataset.section));
 });
 dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-// Click on the backdrop closes the dialog
+// Click on the backdrop closes the dialog. Only clicks targeting the dialog itself count:
+// a tab click swaps the content (and resizes the dialog) before this runs, so its
+// coordinates can land outside the new bounds even though it was inside the box
 dialog.addEventListener('click', e => {
+    if (e.target !== dialog) return;
     const r = dialog.getBoundingClientRect();
     const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
     if (outside) dialog.close();

@@ -6,8 +6,8 @@
     --accent: #ffb454;
     --accent-dark: #b0532a;
     --font-pixel: 'Press Start 2P', monospace;
-    --font-body: 'VT323', monospace;
-    --body-size: 22px;
+    --font-body: 'Space Mono', monospace;
+    --body-size: 16px;
 }
 
 * { box-sizing: border-box; }
@@ -49,7 +49,7 @@ html, body {
     transform: translateX(-50%);
     white-space: nowrap;
     font-family: var(--font-pixel);
-    font-size: 10px;
+    font-size: 16px;
     color: var(--text);
     background: var(--ink);
     padding: 6px 8px;
@@ -115,13 +115,18 @@ html, body {
 .hud h1 {
     margin: 0;
     font-family: var(--font-pixel);
-    font-size: clamp(16px, 3vw, 28px);
+    font-size: 32px;
     color: var(--text);
+}
+
+/* Press Start 2P stays crisp at multiples of 8px, so step down instead of scaling fluidly */
+@media (max-width: 600px) {
+    .hud h1 { font-size: 24px; }
 }
 
 .subtitle {
     margin: 8px 0 14px;
-    font-size: var(--body-size);
+    font-size: 20px;
     color: var(--box-edge);
 }
 
@@ -152,7 +157,7 @@ html, body {
 /* ---------- Pixel UI pieces ---------- */
 .pixel-btn {
     font-family: var(--font-pixel);
-    font-size: 10px;
+    font-size: 16px;
     color: var(--ink);
     background: var(--accent);
     text-decoration: none;
@@ -218,7 +223,7 @@ html, body {
 #dialog-content {
     overflow-y: auto;
     font-size: var(--body-size);
-    line-height: 1.2;
+    line-height: 1.6;
     padding-right: 8px;
 }
 
@@ -232,14 +237,14 @@ html, body {
 
 #dialog-content h3 {
     font-family: var(--font-pixel);
-    font-size: 12px;
+    font-size: 16px;
     color: var(--box-edge);
     margin: 20px 0 8px;
 }
 
 #dialog-content h4 {
     font-size: var(--body-size);
-    font-weight: normal;
+    font-weight: 700;
     color: var(--accent);
     margin: 12px 0 4px;
 }
@@ -251,7 +256,7 @@ html, body {
     top: 16px;
     right: 16px;
     font-family: var(--font-pixel);
-    font-size: 12px;
+    font-size: 16px;
     color: var(--text);
     background: transparent;
     border: none;
